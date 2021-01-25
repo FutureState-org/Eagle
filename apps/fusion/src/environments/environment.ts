@@ -4,7 +4,7 @@
 
 export const environment: IEnvironment = {
   production: false,
-  sitePath: 'eagle-dev.idc.tarento.com',
+  sitePath: 'd3fjnqx5k9sa15.cloudfront.net',
 }
 interface IEnvironment {
   production: boolean
