@@ -44,6 +44,12 @@ import {
   map,
 } from 'rxjs/operators'
 // import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper'
+import {
+  SECTOR,
+  DATATOPICS,
+  PUBLICTYPE,
+  GEOGRAPHY,
+} from './edit-meta.models'
 
 @Component({
   selector: 'ws-auth-edit-meta',
@@ -122,6 +128,9 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   timer: any
 
   filteredOptions$: Observable<string[]> = of([])
+  dataTopicsList: string[] = []
+  publicTypeList: string[] = []
+  geographyList: string[] = []
 
   constructor(
     private formBuilder: FormBuilder,
@@ -150,11 +159,15 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
+
     this.typeCheck()
     this.ordinals = this.authInitService.ordinals
     this.audienceList = this.ordinals.audience
     this.jobProfileList = this.ordinals.jobProfile
     this.complexityLevelList = this.ordinals.audience
+    this.dataTopicsList = DATATOPICS
+    this.publicTypeList = PUBLICTYPE
+    this.geographyList = GEOGRAPHY
 
     this.creatorContactsCtrl = new FormControl()
     this.trackContactsCtrl = new FormControl()
@@ -414,7 +427,9 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   filterOrdinals() {
     this.complexityLevelList = []
-    this.ordinals.complexityLevel.map((v: any) => {
+
+    SECTOR.map((v: any) => {
+      // this.ordinals.complexityLevel.map((v: any) => {
       if (v.condition) {
         let canAdd = false
           // tslint:disable-next-line: whitespace
@@ -465,6 +480,60 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     })
   }
+  // filterOrdinals() {
+  //   this.complexityLevelList = []
+
+  //   this.ordinals.complexityLevel.map((v: any) => {
+  //     if (v.condition) {
+  //       let canAdd = false
+  //         // tslint:disable-next-line: whitespace
+  //         ; (v.condition.showFor || []).map((con: any) => {
+  //           let innerCondition = false
+  //           Object.keys(con).map(meta => {
+  //             if (
+  //               con[meta].indexOf(
+  //                 (this.contentForm.controls[meta] && this.contentForm.controls[meta].value) ||
+  //                 this.contentMeta[meta as keyof NSContent.IContentMeta],
+  //               ) > -1
+  //             ) {
+  //               innerCondition = true
+  //             }
+  //           })
+  //           if (innerCondition) {
+  //             canAdd = true
+  //           }
+  //         })
+  //       if (canAdd) {
+  //         // tslint:disable-next-line: semicolon // tslint:disable-next-line: whitespace
+  //         ; (v.condition.nowShowFor || []).map((con: any) => {
+  //           let innerCondition = false
+  //           Object.keys(con).map(meta => {
+  //             if (
+  //               con[meta].indexOf(
+  //                 (this.contentForm.controls[meta] && this.contentForm.controls[meta].value) ||
+  //                 this.contentMeta[meta as keyof NSContent.IContentMeta],
+  //               ) < 0
+  //             ) {
+  //               innerCondition = true
+  //             }
+  //           })
+  //           if (innerCondition) {
+  //             canAdd = false
+  //           }
+  //         })
+  //       }
+  //       if (canAdd) {
+  //         this.complexityLevelList.push(v.value)
+  //       }
+  //     } else {
+  //       if (typeof v === 'string') {
+  //         this.complexityLevelList.push(v)
+  //       } else {
+  //         this.complexityLevelList.push(v.value)
+  //       }
+  //     }
+  //   })
+  // }
 
   assignExpiryDate() {
     this.canExpiry = !this.canExpiry
@@ -598,12 +667,11 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
         const currentMeta: NSContent.IContentMeta = JSON.parse(JSON.stringify(this.contentForm.value))
         const meta = <any>{}
         if (this.canExpiry) {
-          currentMeta.expiryDate = `${
-            expiryDate
-              .toISOString()
-              .replace(/-/g, '')
-              .replace(/:/g, '')
-              .split('.')[0]
+          currentMeta.expiryDate = `${expiryDate
+            .toISOString()
+            .replace(/-/g, '')
+            .replace(/:/g, '')
+            .split('.')[0]
             }+0000`
         }
         Object.keys(currentMeta).map(v => {

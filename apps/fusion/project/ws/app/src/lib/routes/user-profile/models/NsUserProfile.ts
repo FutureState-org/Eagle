@@ -16,7 +16,10 @@ export namespace NsUserProfileDetails {
     'category': string
     'primaryEmail': string
     'maritalStatus': string
-    'residenceAddress': string
+    'residenceAddress': string,
+    'organizationName': string,
+    'organizationType': string,
+    'country': string,
   }
 
   export interface IAcademics {
@@ -51,4 +54,11 @@ export namespace NsUserProfileDetails {
     SC = 'SC',
     ST = 'ST',
   }
+  export const EORGANIZATIONTYPE = [
+    { name: 'Government' },
+    { name: 'Civil Society' },
+    { name: 'Private Sector' },
+    { name: 'Academia' },
+  ]
+
 }

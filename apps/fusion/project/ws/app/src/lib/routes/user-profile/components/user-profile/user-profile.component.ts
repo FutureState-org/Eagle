@@ -26,8 +26,7 @@ import { NotificationComponent } from '@ws/author/src/lib/modules/shared/compone
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { LoaderService } from '@ws/author/src/public-api'
-
-
+// import { InterestComponent } from '../../../profile/routes/interest/components/interest/interest.component'
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -99,6 +98,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   showIndustryOther!: boolean
   photoUrl!: string | ArrayBuffer | null
   isForcedUpdate = false
+  showOrganizationTypeOther!: boolean
+  eOrganizationType: any
+
+  // @ViewChild('userInterest', { static: false }) interestCompRef:
+  //   | InterestComponent
+  //   | undefined = undefined
 
   constructor(
     private snackBar: MatSnackBar,
@@ -123,15 +128,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       primaryEmail: new FormControl('', [Validators.required, Validators.email]),
       primaryEmailType: new FormControl(this.assignPrimaryEmailTypeCheckBox(this.ePrimaryEmailType.OFFICIAL), []),
       secondaryEmail: new FormControl('', []),
-      nationality: new FormControl('', [Validators.required, forbiddenNamesValidator(this.masterNationality)]),
-      dob: new FormControl('', [Validators.required]),
-      gender: new FormControl('', [Validators.required]),
-      maritalStatus: new FormControl('', [Validators.required]),
-      domicileMedium: new FormControl('', [Validators.required]),
+      nationality: new FormControl('', [forbiddenNamesValidator(this.masterNationality)]),
+      dob: new FormControl('', []),
+      gender: new FormControl('', []),
+      maritalStatus: new FormControl('', []),
+      domicileMedium: new FormControl('', []),
       knownLanguages: new FormControl([], []),
-      residenceAddress: new FormControl('', [Validators.required]),
-      category: new FormControl('', [Validators.required]),
-      pincode: new FormControl('', [Validators.required, Validators.pattern(this.pincodePattern)]),
+      residenceAddress: new FormControl('', []),
+      category: new FormControl('', []),
+      pincode: new FormControl('', [Validators.pattern(this.pincodePattern)]),
       schoolName10: new FormControl('', []),
       yop10: new FormControl('', [Validators.pattern(this.yearPattern)]),
       schoolName12: new FormControl('', []),
@@ -163,10 +168,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficeAddress: new FormControl('', []),
       otherDetailsOfficePinCode: new FormControl('', []),
       departmentName: new FormControl('', []),
+      organizationName: new FormControl('', []),
+      organizationType: new FormControl('', []),
+      organizationTypeOther: new FormControl('', []),
+      country: new FormControl('', []),
     })
   }
 
   ngOnInit() {
+    this.eOrganizationType = NsUserProfileDetails.EORGANIZATIONTYPE
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
     //   console.log('ngOnInit - value', value);
     // })
@@ -649,7 +659,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       skillAquiredDesc: data.skills.additionalSkills,
       certificationDesc: data.skills.certificateDetails,
     },
-      { emitEvent: true })
+                                   { emitEvent: true })
     this.cd.detectChanges()
     this.cd.markForCheck()
     this.setDropDownOther(organisation)
@@ -922,6 +932,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     if (field === 'designation' && value !== 'Other') {
       this.showDesignationOther = false
       this.createUserForm.controls['designationOther'].setValue('')
+    }
+    if (field === 'organizationType' && value !== 'Other') {
+      this.showOrganizationTypeOther = false
+      this.createUserForm.controls['organizationTypeOther'].setValue('')
     }
   }
 

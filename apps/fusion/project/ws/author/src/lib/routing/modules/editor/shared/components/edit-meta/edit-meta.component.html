@@ -416,9 +416,34 @@
                   <label>
                     <div class="flex flex-middle"
                       [ngClass]="{ required: checkCondition('complexityLevel', 'required') }">
+                      <span i18n>Sector</span>
+                    </div>
+                    <span i18n *ngIf="infoType === 'knowledgeLevel'">How tough do you think the content is?</span>
+                  </label>
+                  <div class="margin-top-l">
+                    <mat-form-field appearance="outline" class="margin-top-s"
+                      [ngClass]="{ 'mat-form-field-invalid': showError('complexityLevel') }">
+                      <mat-select formControlName="complexityLevel" i18n-placeholder placeholder="--Select--">
+                        <mat-option *ngIf="!checkCondition('complexityLevel', 'required')" i18n [value]="null">None
+                        </mat-option>
+                        <mat-option *ngFor="let complexityLevel of complexityLevelList" [value]="complexityLevel">
+                          {{ complexityLevel }}</mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="showError('complexityLevel')" i18n>Sector is mandatory
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+
+
+                <!-- <div class="margin-top-xs margin-right-xs margin-left-xs flex-1"
+                  *ngIf="checkCondition('complexityLevel', 'show')"
+                  [ngClass]="{ disable: checkCondition('complexityLevel', 'disabled') }">
+                  <label>
+                    <div class="flex flex-middle"
+                      [ngClass]="{ required: checkCondition('complexityLevel', 'required') }">
                       <span i18n>Knowledge Level</span>
-                      <!-- <mat-icon class="ws-mat-primary-text margin-left-xs pointer" (click)="showInfo('knowledgeLevel')">info
-                  </mat-icon> -->
                     </div>
                     <span i18n *ngIf="infoType === 'knowledgeLevel'">How tough do you think the content is?</span>
                   </label>
@@ -435,16 +460,14 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
-                </div>
-                <div class="margin-top-xs margin-right-xs margin-left-xs flex-1"
+                </div>-->
+                <!-- <div class="margin-top-xs margin-right-xs margin-left-xs flex-1"
                   *ngIf="checkCondition('idealScreenSize', 'show')"
                   [ngClass]="{ disable: checkCondition('idealScreenSize', 'disabled') }">
                   <label>
                     <div class="margin-top-s flex flex-middle">
-                      <span [ngClass]="{ required: checkCondition('idealScreenSize', 'required') }" i18n>Best viewed
+                      <span [ngClass]="{ required: checkCondition('idealScreenSize', 'required') }" i18n>Data topics
                         in</span>
-                      <!-- <mat-icon class="ws-mat-primary-text margin-left-xs pointer" (click)="showInfo('bestViewedIn')">info
-                                </mat-icon> -->
                     </div>
                     <span i18n *ngIf="infoType === 'bestViewedIn'">
                       The preferred screen for this content
@@ -464,11 +487,63 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
+                </div> -->
+
+                <div class="margin-top-xs margin-right-xs margin-left-xs flex-1"
+                  *ngIf="checkCondition('idealScreenSize', 'show')"
+                  [ngClass]="{ disable: checkCondition('idealScreenSize', 'disabled') }">
+                  <label>
+                    <div class="margin-top-s flex flex-middle">
+                      <span [ngClass]="{ required: checkCondition('idealScreenSize', 'required') }" i18n>Data
+                        topics</span>
+                    </div>
+                    <span i18n *ngIf="infoType === 'bestViewedIn'">
+                      The preferred screen for this content
+                    </span>
+                  </label>
+                  <div class="margin-top-s">
+                    <mat-form-field appearance="outline" class="margin-top-xs"
+                      [ngClass]="{ 'mat-form-field-invalid': showError('idealScreenSize') }">
+                      <mat-select formControlName="idealScreenSize" i18n-placeholder placeholder="--Select--">
+                        <mat-option *ngIf="!checkCondition('idealScreenSize', 'required')" i18n [value]="null">None
+                        </mat-option>
+                        <mat-option *ngFor="let dataTopics of dataTopicsList" [value]="dataTopics">
+                          {{ dataTopics }}</mat-option>
+                        <!-- <mat-option [value]="'7'" i18n> Mobile</mat-option>
+                        <mat-option [value]="'10'" i18n> Tablet</mat-option>
+                        <mat-option [value]="'13'" i18n> Desktop</mat-option> -->
+                      </mat-select>
+                      <mat-error *ngIf="showError('idealScreenSize')" i18n>Data topic in is mandatory
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
                 </div>
+
               </div>
 
               <div class="flex new-mobile">
+
                 <div class="margin-top-xs margin-right-xs margin-left-xs flex-1"
+                  *ngIf="checkCondition('learningMode', 'show')"
+                  [ngClass]="{ disable: checkCondition('learningMode', 'disabled') }">
+                  <label [ngClass]="{ required: checkCondition('learningMode', 'required') }">
+                    <span i18n>Publication type</span>
+                  </label>
+                  <div class="margin-top-l">
+                    <mat-form-field appearance="outline" class="margin-top-s"
+                      [ngClass]="{ 'mat-form-field-invalid': showError('learningMode') }">
+                      <mat-select formControlName="learningMode" i18n-placeholder placeholder="--Select--">
+                        <mat-option *ngIf="!checkCondition('learningMode', 'required')" i18n [value]="null">None
+                        </mat-option>
+                        <mat-option *ngFor="let publicType of publicTypeList" [value]="publicType">
+                          {{ publicType }}</mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="showError('learningMode')" i18n>Public type is mandatory </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <!-- <div class="margin-top-xs margin-right-xs margin-left-xs flex-1"
                   *ngIf="checkCondition('learningMode', 'show')"
                   [ngClass]="{ disable: checkCondition('learningMode', 'disabled') }">
                   <label [ngClass]="{ required: checkCondition('learningMode', 'required') }">
@@ -486,7 +561,7 @@
                       <mat-error *ngIf="showError('learningMode')" i18n>Mode is mandatory </mat-error>
                     </mat-form-field>
                   </div>
-                </div>
+                </div> -->
                 <div class="margin-top-xs margin-right-xs margin-left-xs flex-1"
                   *ngIf="checkCondition('visibility', 'show')"
                   [ngClass]="{ disable: checkCondition('visibility', 'disabled') }">
@@ -524,10 +599,35 @@
                   [ngClass]="{ disable: checkCondition('exclusiveContent', 'disabled') }">
                   <label>
                     <div class="flex flex-middle">
-                      <span [ngClass]="{ required: checkCondition('exclusiveContent', 'required') }" i18n>Cost</span>
+                      <span [ngClass]="{ required: checkCondition('exclusiveContent', 'required') }"
+                        i18n>Geography</span>
                       <!-- <mat-icon class="ws-mat-primary-text margin-left-xs pointer" (click)="showInfo('exclusiveContent')">
                     info
                   </mat-icon> -->
+                    </div>
+                    <span i18n *ngIf="infoType === 'exclusiveContent'">Is Paid Content?</span>
+                  </label>
+                  <div class="margin-top-m">
+                    <mat-form-field appearance="outline" class="margin-top-s"
+                      [ngClass]="{ 'mat-form-field-invalid': showError('exclusiveContent') }">
+                      <mat-select formControlName="exclusiveContent" i18n-placeholder placeholder="--Select--">
+                        <mat-option *ngFor="let geography of geographyList" [value]="geography">
+                          {{ geography }}</mat-option>
+                        <!-- <mat-option [value]="true" i18n> Paid</mat-option>
+                        <mat-option [value]="false" i18n> Free </mat-option> -->
+                      </mat-select>
+                      <mat-error *ngIf="showError('exclusiveContent')" i18n>Geography is mandatory
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <!-- <div class="margin-top-xs margin-right-xs margin-left-xs flex-1"
+                  *ngIf="checkCondition('exclusiveContent', 'show')"
+                  [ngClass]="{ disable: checkCondition('exclusiveContent', 'disabled') }">
+                  <label>
+                    <div class="flex flex-middle">
+                      <span [ngClass]="{ required: checkCondition('exclusiveContent', 'required') }" i18n>Cost</span>
                     </div>
                     <span i18n *ngIf="infoType === 'exclusiveContent'">Is Paid Content?</span>
                   </label>
@@ -542,7 +642,8 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
-                </div>
+                </div> -->
+
                 <div class="margin-top-xs margin-right-xs margin-left-xs flex-1"
                   *ngIf="checkCondition('keywords', 'show')"
                   [ngClass]="{ disable: checkCondition('keywords', 'disabled') }">
@@ -558,7 +659,8 @@
                         file_copy
                       </mat-icon>
                     </div>
-                    <span i18n *ngIf="infoType === 'keyword'">Add relevant tags to your content. Press Enter after each
+                    <span i18n *ngIf="infoType === 'keyword'">Add relevant tags to your content. Press Enter after
+                      each
                       keyword.
                     </span>
                   </label>
@@ -579,7 +681,8 @@
                     </mat-form-field>
                     <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption
                       (optionSelected)="optionSelected($event.option.value); keywordsView.value = ''">
-                      <mat-option *ngIf="keywordsSearch.value" [value]="keywordsSearch.value">{{ keywordsSearch.value }}
+                      <mat-option *ngIf="keywordsSearch.value" [value]="keywordsSearch.value">{{ keywordsSearch.value
+                        }}
                       </mat-option>
                       <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">{{ option }}
                       </mat-option>
@@ -819,8 +922,8 @@
                             </span>
                           </mat-select-trigger>
                           <mat-option *ngFor="let org of ordinals.org" [value]="org">{{
-                      org
-                    }}</mat-option>
+                            org
+                            }}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="showError('org')" i18n>Organisation is mandatory </mat-error>
                       </mat-form-field>
