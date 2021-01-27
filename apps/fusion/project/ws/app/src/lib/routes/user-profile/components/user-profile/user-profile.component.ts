@@ -27,19 +27,21 @@ import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { LoaderService } from '@ws/author/src/public-api'
 
+
+
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      if (!optionsArray) {
-        return null
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (!optionsArray) {
+      return null
       // tslint:disable-next-line: no-else-after-return
-      } else {
-        const index = optionsArray.findIndex((op: any) => {
-          // tslint:disable-next-line: prefer-template
-          return new RegExp('^' + op.name + '$').test(control.value)
-        })
-        return index < 0 ? { forbiddenNames: { value: control.value } } : null
-      }
+    } else {
+      const index = optionsArray.findIndex((op: any) => {
+        // tslint:disable-next-line: prefer-template
+        return new RegExp('^' + op.name + '$').test(control.value)
+      })
+      return index < 0 ? { forbiddenNames: { value: control.value } } : null
     }
+  }
 }
 @Component({
   selector: 'ws-app-user-profile',
@@ -386,8 +388,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     this.knownLanguagesInputRef.nativeElement.value = ''
     if (this.createUserForm.get('knownLanguages')) {
-    // tslint:disable-next-line: no-non-null-assertion
-    this.createUserForm.get('knownLanguages')!.setValue(null)
+      // tslint:disable-next-line: no-non-null-assertion
+      this.createUserForm.get('knownLanguages')!.setValue(null)
     }
   }
 
@@ -647,7 +649,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       skillAquiredDesc: data.skills.additionalSkills,
       certificationDesc: data.skills.certificateDetails,
     },
-                                   { emitEvent: true })
+      { emitEvent: true })
     this.cd.detectChanges()
     this.cd.markForCheck()
     this.setDropDownOther(organisation)
