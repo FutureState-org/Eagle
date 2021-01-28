@@ -47,29 +47,33 @@ export class FeaturesComponent implements OnInit, OnDestroy {
       const appsConfig = this.configurationSvc.appsConfig
       const availGroups: NsAppsConfig.IGroup[] = []
       appsConfig.groups.forEach(group => {
-        if (group.hasRole.length === 0 || this.accessService.hasRole(group.hasRole)) {
+        // if (group.hasRole.length === 0 || this.accessService.hasRole(group.hasRole)) {
+        //   availGroups.push(group)
+        // }
+        if (group.hasRole.length === 0 || this.accessService.hasRole(group.hasRole) || group.name.toLowerCase() === 'contribution') {
           availGroups.push(group)
         }
       })
+
       this.featuresConfig = availGroups.map(
         (group: NsAppsConfig.IGroup): IGroupWithFeatureWidgets => (
           {
             ...group,
             featureWidgets: group.featureIds.map(
               (id: string): NsWidgetResolver.IRenderConfigWithTypedData<NsPage.INavLink> =>
-                ({
-                  widgetType: ROOT_WIDGET_CONFIG.actionButton._type,
-                  widgetSubType: ROOT_WIDGET_CONFIG.actionButton.feature,
-                  widgetHostClass: 'my-2 px-2 w-1/2 sm:w-1/3 md:w-1/6 w-lg-1-8 box-sizing-box',
-                  widgetData: {
-                    config: {
-                      type: 'feature-item',
-                      useShortName: false,
-                      treatAsCard: true,
-                    },
-                    actionBtn: appsConfig.features[id],
+              ({
+                widgetType: ROOT_WIDGET_CONFIG.actionButton._type,
+                widgetSubType: ROOT_WIDGET_CONFIG.actionButton.feature,
+                widgetHostClass: 'my-2 px-2 w-1/2 sm:w-1/3 md:w-1/6 w-lg-1-8 box-sizing-box',
+                widgetData: {
+                  config: {
+                    type: 'feature-item',
+                    useShortName: false,
+                    treatAsCard: true,
                   },
-                }),
+                  actionBtn: appsConfig.features[id],
+                },
+              }),
             ),
           }),
       )

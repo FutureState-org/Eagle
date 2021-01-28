@@ -8,12 +8,8 @@
     <ng-template matExpansionPanelContent>
       <div class="flex justify-between items-center ml-3 my-3">
         <div class="text-sm">Profile picture</div>
-        <mat-slide-toggle
-          [labelPosition]="'before'"
-          [checked]="!hiddenFeatures.includes('profilePicture')"
-          [color]="'primary'"
-          (change)="updateStatus('profilePicture')"
-        >
+        <mat-slide-toggle [labelPosition]="'before'" [checked]="!hiddenFeatures.includes('profilePicture')"
+          [color]="'primary'" (change)="updateStatus('profilePicture')">
           <ng-container i18n *ngIf="!hiddenFeatures.includes('profilePicture')">Show</ng-container>
           <ng-container i18n *ngIf="hiddenFeatures.includes('profilePicture')">Hide</ng-container>
         </mat-slide-toggle>
@@ -21,12 +17,8 @@
       <mat-divider></mat-divider>
       <div class="flex justify-between items-center ml-3 my-3">
         <div class="text-sm">Interests</div>
-        <mat-slide-toggle
-          [labelPosition]="'before'"
-          [checked]="!hiddenFeatures.includes('interests')"
-          [color]="'primary'"
-          (change)="updateStatus('interests')"
-        >
+        <mat-slide-toggle [labelPosition]="'before'" [checked]="!hiddenFeatures.includes('interests')"
+          [color]="'primary'" (change)="updateStatus('interests')">
           <ng-container i18n *ngIf="!hiddenFeatures.includes('interests')">Show</ng-container>
           <ng-container i18n *ngIf="hiddenFeatures.includes('interests')">Hide</ng-container>
         </mat-slide-toggle>
@@ -40,12 +32,8 @@
     <ng-template matExpansionPanelContent>
       <div class="flex justify-between items-center ml-3 my-3">
         <div class="text-sm">Knowledge boards followed</div>
-        <mat-slide-toggle
-          [labelPosition]="'before'"
-          [checked]="!hiddenFeatures.includes('kbsFollowed')"
-          [color]="'primary'"
-          (change)="updateStatus('kbsFollowed')"
-        >
+        <mat-slide-toggle [labelPosition]="'before'" [checked]="!hiddenFeatures.includes('kbsFollowed')"
+          [color]="'primary'" (change)="updateStatus('kbsFollowed')">
           <ng-container i18n *ngIf="!hiddenFeatures.includes('kbsFollowed')">Show</ng-container>
           <ng-container i18n *ngIf="hiddenFeatures.includes('kbsFollowed')">Hide</ng-container>
         </mat-slide-toggle>
@@ -53,12 +41,8 @@
       <mat-divider></mat-divider>
       <div class="flex justify-between items-center ml-3 my-3">
         <div class="text-sm">Playlists</div>
-        <mat-slide-toggle
-          [labelPosition]="'before'"
-          [checked]="!hiddenFeatures.includes('playlists')"
-          [color]="'primary'"
-          (change)="updateStatus('playlists')"
-        >
+        <mat-slide-toggle [labelPosition]="'before'" [checked]="!hiddenFeatures.includes('playlists')"
+          [color]="'primary'" (change)="updateStatus('playlists')">
           <ng-container i18n *ngIf="!hiddenFeatures.includes('playlists')">Show</ng-container>
           <ng-container i18n *ngIf="hiddenFeatures.includes('playlists')">Hide</ng-container>
         </mat-slide-toggle>
@@ -72,12 +56,8 @@
     <ng-template matExpansionPanelContent>
       <div class="flex justify-between items-center ml-3 my-3">
         <div class="text-sm">Content authored by me</div>
-        <mat-slide-toggle
-          [labelPosition]="'before'"
-          [checked]="!hiddenFeatures.includes('contentAuthored')"
-          [color]="'primary'"
-          (change)="updateStatus('contentAuthored')"
-        >
+        <mat-slide-toggle [labelPosition]="'before'" [checked]="!hiddenFeatures.includes('contentAuthored')"
+          [color]="'primary'" (change)="updateStatus('contentAuthored')">
           <ng-container i18n *ngIf="!hiddenFeatures.includes('contentAuthored')">Show</ng-container>
           <ng-container i18n *ngIf="hiddenFeatures.includes('contentAuthored')">Hide</ng-container>
         </mat-slide-toggle>
@@ -85,12 +65,8 @@
       <mat-divider></mat-divider>
       <div class="flex justify-between items-center ml-3 my-3">
         <div class="text-sm">Content reviewed by me</div>
-        <mat-slide-toggle
-          [labelPosition]="'before'"
-          [checked]="!hiddenFeatures.includes('contentReviewed')"
-          [color]="'primary'"
-          (change)="updateStatus('contentReviewed')"
-        >
+        <mat-slide-toggle [labelPosition]="'before'" [checked]="!hiddenFeatures.includes('contentReviewed')"
+          [color]="'primary'" (change)="updateStatus('contentReviewed')">
           <ng-container i18n *ngIf="!hiddenFeatures.includes('contentReviewed')">Show</ng-container>
           <ng-container i18n *ngIf="hiddenFeatures.includes('contentReviewed')">Hide</ng-container>
         </mat-slide-toggle>
@@ -98,12 +74,8 @@
       <mat-divider></mat-divider>
       <div class="flex justify-between items-center ml-3 my-3">
         <div class="text-sm">Blogs</div>
-        <mat-slide-toggle
-          [labelPosition]="'before'"
-          [checked]="!hiddenFeatures.includes('blogs')"
-          [color]="'primary'"
-          (change)="updateStatus('blogs')"
-        >
+        <mat-slide-toggle [labelPosition]="'before'" [checked]="!hiddenFeatures.includes('blogs')" [color]="'primary'"
+          (change)="updateStatus('blogs')">
           <ng-container i18n *ngIf="!hiddenFeatures.includes('blogs')">Show</ng-container>
           <ng-container i18n *ngIf="hiddenFeatures.includes('blogs')">Hide</ng-container>
         </mat-slide-toggle>
@@ -111,12 +83,8 @@
       <mat-divider></mat-divider>
       <div class="flex justify-between items-center ml-3 my-3">
         <div class="text-sm">QnA</div>
-        <mat-slide-toggle
-          [labelPosition]="'before'"
-          [checked]="!hiddenFeatures.includes('QnA')"
-          [color]="'primary'"
-          (change)="updateStatus('QnA')"
-        >
+        <mat-slide-toggle [labelPosition]="'before'" [checked]="!hiddenFeatures.includes('QnA')" [color]="'primary'"
+          (change)="updateStatus('QnA')">
           <ng-container i18n *ngIf="!hiddenFeatures.includes('QnA')">Show</ng-container>
           <ng-container i18n *ngIf="hiddenFeatures.includes('QnA')">Hide</ng-container>
         </mat-slide-toggle>

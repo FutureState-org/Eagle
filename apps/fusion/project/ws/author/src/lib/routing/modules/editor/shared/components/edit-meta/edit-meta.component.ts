@@ -111,7 +111,7 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   { color: '#185F49', isDefault: false }, { color: '#126489', isDefault: false }]
 
   workFlow = [{ isActive: true, isCompleted: false, name: 'Basic Details', step: 0 },
-  { isActive: false, isCompleted: false, name: 'Classification', step: 1 },
+  // { isActive: false, isCompleted: false, name: 'Classification', step: 1 },
   { isActive: false, isCompleted: false, name: 'Intended for', step: 2 }]
 
   @ViewChild('creatorContactsView', { static: false }) creatorContactsView!: ElementRef
@@ -159,6 +159,10 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
+
+    if ((this.configSvc.userRoles || new Set()).has('admin')) {
+      this.workFlow.splice(1, 0, { isActive: false, isCompleted: false, name: 'Classification', step: 1 })
+    }
 
     this.typeCheck()
     this.ordinals = this.authInitService.ordinals
@@ -385,21 +389,45 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   customStepper(step: number) {
     if (step >= 0) {
+
       if (this.selectedIndex !== step) {
         this.selectedIndex = step
         const oldStrip = this.workFlow.find(i => i.isActive)
 
-        this.workFlow[step].isActive = true
-        this.workFlow[step].isCompleted = false
+        const ind = this.workFlow.findIndex(x => x.step === step)
+        this.workFlow[ind].isActive = true
+        this.workFlow[ind].isCompleted = false
+
         if (oldStrip && oldStrip.step >= 0) {
-          this.workFlow[oldStrip.step].isActive = false
-          this.workFlow[oldStrip.step].isCompleted = true
+
+          const indx = this.workFlow.findIndex(x => x.step === oldStrip.step)
+          this.workFlow[indx].isActive = false
+          this.workFlow[indx].isCompleted = true
         }
+
       }
     } else {
       this.data.emit('back')
     }
   }
+
+  // customStepper(step: number) {
+  //   if (step >= 0) {
+  //     if (this.selectedIndex !== step) {
+  //       this.selectedIndex = step
+  //       const oldStrip = this.workFlow.find(i => i.isActive)
+  //       this.workFlow[step].isActive = true
+  //       this.workFlow[step].isCompleted = false
+  //       if (oldStrip && oldStrip.step >= 0) {
+  //         this.workFlow[oldStrip.step].isActive = false
+  //         this.workFlow[oldStrip.step].isCompleted = true
+  //       }
+  //     }
+  //   } else {
+  //     this.data.emit('back')
+  //   }
+  // }
+
   private set content(contentMeta: NSContent.IContentMeta) {
     this.contentMeta = contentMeta
     this.isEditEnabled = this.contentService.hasAccess(
