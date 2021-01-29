@@ -49,6 +49,7 @@ import {
   DATATOPICS,
   PUBLICTYPE,
   GEOGRAPHY,
+  INTENDEDFOREMAILNAME,
 } from './edit-meta.models'
 
 @Component({
@@ -131,6 +132,7 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   dataTopicsList: string[] = []
   publicTypeList: string[] = []
   geographyList: string[] = []
+  showEmailWithName = false
 
   constructor(
     private formBuilder: FormBuilder,
@@ -163,6 +165,12 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
     if ((this.configSvc.userRoles || new Set()).has('admin')) {
       this.workFlow.splice(1, 0, { isActive: false, isCompleted: false, name: 'Classification', step: 1 })
     }
+
+    INTENDEDFOREMAILNAME.forEach(e => {
+      if ((this.configSvc.userRoles || new Set()).has(e)) {
+        this.showEmailWithName = true
+      }
+    })
 
     this.typeCheck()
     this.ordinals = this.authInitService.ordinals
@@ -335,7 +343,9 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
       distinctUntilChanged(),
       switchMap(value => this.interestSvc.fetchAutocompleteInterestsV2(value)),
     )
+
   }
+
   typeCheck() {
     if (this.type) {
       let dataName = ''
@@ -1088,6 +1098,7 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
             this.contentForm.controls[field].value.push({
               id: event.option.value.id,
               name: event.option.value.displayName,
+              email: event.option.value.mail,
             })
             this.contentForm.controls[field].setValue(this.contentForm.controls[field].value)
           } else {

@@ -47,3 +47,8 @@ export const GEOGRAPHY = [
   'South Asia',
   'Global',
 ]
+
+export const INTENDEDFOREMAILNAME = [
+  'admin',
+  'curator',
+]

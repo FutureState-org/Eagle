@@ -179,6 +179,7 @@ export namespace NSContent {
   export interface IAuthorDetails {
     id: string
     name: string
+    email: string
   }
 
   export interface IComments {

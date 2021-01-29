@@ -1095,7 +1095,8 @@
                         <mat-chip-list #creatorDetailsChipList aria-label="Original Author selection">
                           <mat-chip *ngFor="let author of contentForm.controls.creatorDetails.value"
                             [selectable]="selectable" [removable]="removable" (removed)="removeCreatorDetails(author)">
-                            {{ author.name }}
+                            {{ author.name }} {{showEmailWithName ? '|' : '' }} {{ showEmailWithName ? author.email : ''
+                            }}
                             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                           </mat-chip>
                           <input i18n-placeholder placeholder="Enter name" #creatorDetailsView
