@@ -52,13 +52,40 @@ import {
   INTENDEDFOREMAILNAME,
 } from './edit-meta.models'
 
+// import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter'
+// import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core'
+// import { MatDatepicker } from '@angular/material/datepicker'
+// import * as _moment from 'moment'
+// // tslint:disable-next-line:no-duplicate-imports
+// import { default as _rollupMoment, Moment } from 'moment'
+
+// const moment = _rollupMoment || _moment
+// export const MY_FORMATS = {
+//   parse: {
+//     dateInput: 'MM/YYYY',
+//   },
+//   display: {
+//     dateInput: 'MM/YYYY',
+//     monthYearLabel: 'MMM YYYY',
+//     dateA11yLabel: 'LL',
+//     monthYearA11yLabel: 'MMMM YYYY',
+//   },
+// }
+
 @Component({
   selector: 'ws-auth-edit-meta',
   templateUrl: './edit-meta.component.html',
   styleUrls: ['./edit-meta.component.scss'],
-  // providers: [{
-  //   provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false },
-  // }],
+  providers: [
+    // {
+    //   provide: DateAdapter,
+    //   useClass: MomentDateAdapter,
+    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    // },
+    // { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+
+    // {provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false },}
+  ],
 })
 export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   contentMeta!: NSContent.IContentMeta
@@ -133,6 +160,8 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   publicTypeList: string[] = []
   geographyList: string[] = []
   showEmailWithName = false
+  kwlist: string[] = []
+  filteredKeyWord: string[] = []
 
   constructor(
     private formBuilder: FormBuilder,
@@ -170,6 +199,11 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
       if ((this.configSvc.userRoles || new Set()).has(e)) {
         this.showEmailWithName = true
       }
+    })
+
+    this.interestSvc.fetchAutocompleteInterestsV2('').subscribe(a => {
+      this.kwlist = a
+      this.filteredKeyWord = a
     })
 
     this.typeCheck()
@@ -344,6 +378,15 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
       switchMap(value => this.interestSvc.fetchAutocompleteInterestsV2(value)),
     )
 
+    this.keywordsCtrl.valueChanges.subscribe(d => {
+      this.filteredKeyWord = this.keyword_filter(d)
+    })
+
+  }
+
+  private keyword_filter(value: string): string[] {
+    const filterValue = value.toLowerCase()
+    return this.kwlist.filter(fruit => fruit.toLowerCase().includes(filterValue))
   }
 
   typeCheck() {
@@ -387,6 +430,7 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
         this.contentForm.controls.keywords.setValue(value)
       }
     }
+
   }
 
   ngOnDestroy() {
@@ -439,6 +483,7 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   // }
 
   private set content(contentMeta: NSContent.IContentMeta) {
+
     this.contentMeta = contentMeta
     this.isEditEnabled = this.contentService.hasAccess(
       contentMeta,
@@ -464,6 +509,7 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   filterOrdinals() {
+
     this.complexityLevelList = []
 
     SECTOR.map((v: any) => {
@@ -722,6 +768,7 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
               (this.authInitService.authConfig[v as keyof IFormMeta].type === 'boolean' &&
                 currentMeta[v as keyof NSContent.IContentMeta] === false)
             ) {
+
               meta[v as keyof NSContent.IContentMeta] = currentMeta[v as keyof NSContent.IContentMeta]
             } else {
               meta[v as keyof NSContent.IContentMeta] = JSON.parse(
@@ -735,6 +782,7 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           }
         })
+
         // Quick FIX
         if (this.stage >= 1 && !this.type) {
           delete meta.artifactUrl
@@ -1264,6 +1312,8 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
       unit: [],
       verifiers: [],
       visibility: [],
+      yearOfPublication: [],
+      publicationDate: [],
 
     })
 
@@ -1375,4 +1425,25 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
     })
     return newCatalog
   }
+
+  // chosenYearHandler(normalizedYear: Moment) {
+  //   const ctrlValue = this.contentForm.value.yearOfPublication
+  //   ctrlValue.year(normalizedYear.year())
+  //   this.contentForm.controls['yearOfPublication'].setValue(ctrlValue)
+  //   this.contentForm.controls['learningTrack'].setValue('this.contentForm.value.yearOfPublication._d.toISOString()')
+  //   // tslint:disable-next-line: no-console
+  //   console.log(typeof this.contentForm.value.yearOfPublication._d.toISOString())
+  // }
+
+  // chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+  //   const ctrlValue = this.contentForm.value.yearOfPublication
+  //   ctrlValue.month(normalizedMonth.month())
+  //   this.contentForm.controls['yearOfPublication'].setValue(ctrlValue)
+  //   this.contentForm.controls['learningTrack'].setValue('this.contentForm.value.yearOfPublication._d.toISOString()')
+  //   // tslint:disable-next-line: no-console
+  //   console.log(this.contentForm.value.learningTrack)
+  //   datepicker.close()
+
+  // }
+
 }

@@ -11,6 +11,7 @@
   <ws-auth-status-content-display *ngIf="workFlow && workFlow.length > 0" (selectes)="customStepper($event)"
     [workFlow]="workFlow">
   </ws-auth-status-content-display>
+
   <form [formGroup]="contentForm">
     <mat-tab-group id="editmetagrp" animationDuration="0ms" class="mat-tab-labels" mat-stretch-tabs
       [selectedIndex]="selectedIndex" (selectedTabChange)="selectedIndex = $event.index">
@@ -235,7 +236,6 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
-
                 </div>
                 <div class="margin-top-s" *ngIf="checkCondition('subTitle', 'show')"
                   [ngClass]="{ disable: checkCondition('subTitle', 'disabled') }">
@@ -254,6 +254,33 @@
                   </mat-form-field>
                 </div>
                 <!-- need to remove as per new design -->
+
+
+                <!-- <div class="margin-top-s" *ngIf="checkCondition('monthOfPublication', 'show')" -->
+                <!-- <div class="margin-top-s" [ngClass]="{ disable: checkCondition('yearOfPublication', 'disabled') }">
+                  <p class="margin-remove-bottom"
+                    [ngClass]="{ required: checkCondition('yearOfPublication', 'required') }">
+                    Month and Year of publication
+                  </p>
+                  <mat-form-field appearance="outline" class="margin-top-xs"
+                    [ngClass]="{ 'mat-form-field-invalid': showError('monthOfPublication') }">
+
+                    <input matInput [matDatepicker]="dp" formControlName="yearOfPublication" #yearOfPublication
+                      i18n-placeholder placeholder="Enter Month and Year Of Publication here"
+                      [required]="checkCondition('yearOfPublication', 'required') ? true : null" />
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)"
+                      (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker">
+                    </mat-datepicker>
+
+                    <mat-error *ngIf="showError('yearOfPublication')"
+                      i18n="Month and Year Of Publication Error|Explains Month and Year Of Publication is required">
+                      Month and Year Of publication is mandatory
+                    </mat-error>
+                  </mat-form-field>
+                </div> -->
+
+
 
                 <div class="margin-top-s">
                   <div *ngIf="checkCondition('description', 'show')"
@@ -274,6 +301,12 @@
                     </mat-form-field>
                   </div>
                 </div>
+
+
+
+
+
+
               </div>
             </div>
             <div class="margin-top-s" *ngIf="checkCondition('body', 'show')"
@@ -644,6 +677,7 @@
                   </div>
                 </div> -->
 
+
                 <div class="margin-top-xs margin-right-xs margin-left-xs flex-1"
                   *ngIf="checkCondition('keywords', 'show')"
                   [ngClass]="{ disable: checkCondition('keywords', 'disabled') }">
@@ -652,12 +686,12 @@
                       <span [ngClass]="{ required: checkCondition('keywords', 'required') }" i18n>Keywords</span>
                       <!-- <mat-icon class="ws-mat-primary-text margin-left-xs pointer" (click)="showInfo('keyword')">info
                   </mat-icon> -->
-                      <mat-icon class="float-right margin-left-xs cursor-pointer" *ngIf="
+                      <!-- <mat-icon class="float-right margin-left-xs cursor-pointer" *ngIf="
                       contentForm.controls.keywords.value &&
                       contentForm.controls.keywords.value.length
                     " (click)="copyData('keyword')">
                         file_copy
-                      </mat-icon>
+                      </mat-icon> -->
                     </div>
                     <span i18n *ngIf="infoType === 'keyword'">Add relevant tags to your content. Press Enter after
                       each
@@ -673,22 +707,38 @@
                           {{ key }}
                           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                         </mat-chip>
-                        <input i18n-placeholder [formControl]="keywordsCtrl" [matAutocomplete]="auto"
+                        <!-- <input i18n-placeholder [formControl]="keywordsCtrl" [matAutocomplete]="autokey"
                           placeholder="Search Keywords" #keywordsView [matChipInputFor]="keywords"
                           [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="false"
-                          (matChipInputTokenEnd)="addKeyword($event)" #keywordsSearch />
+                          (matChipInputTokenEnd)="removeField($event)" #keywordsSearch /> -->
+                        <!-- (matChipInputTokenEnd)="addKeyword($event)" #keywordsSearch /> -->
+
+                        <input i18n-placeholder placeholder="Search Keywords" #keywordsView [formControl]="keywordsCtrl"
+                          [matChipInputFor]="keywords" [matAutocomplete]="autokey"
+                          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="false"
+                          (matChipInputTokenEnd)="removeField($event)" #keywordsSearch />
+
+
                       </mat-chip-list>
                     </mat-form-field>
-                    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption
+                    <mat-autocomplete #autokey="matAutocomplete"
                       (optionSelected)="optionSelected($event.option.value); keywordsView.value = ''">
-                      <mat-option *ngIf="keywordsSearch.value" [value]="keywordsSearch.value">{{ keywordsSearch.value
+                      <!-- <mat-option *ngIf="keywordsSearch.value" [value]="keywordsSearch.value">{{ keywordsSearch.value
                         }}
+                      </mat-option> -->
+                      <mat-option *ngFor="let option of filteredKeyWord " [value]="option">{{ option }}
                       </mat-option>
-                      <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">{{ option }}
-                      </mat-option>
+
+
+                      <!-- <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">{{ option }}
+                      </mat-option> -->
                     </mat-autocomplete>
                   </div>
                 </div>
+
+
+
+
               </div>
               <div class="flex new-mobile">
                 <div class="margin-top-xs margin-right-xs margin-left-xs flex-1"

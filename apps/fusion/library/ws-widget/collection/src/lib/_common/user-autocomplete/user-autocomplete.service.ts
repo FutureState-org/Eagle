@@ -8,7 +8,8 @@ import { NsAutoComplete } from './user-autocomplete.model'
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {
   AUTOCOMPLETE: (query: string) => `${PROTECTED_SLAG_V8}/user/autocomplete/${query}`,
-  AUTOCOMPLETE_BY_DEPARTMENT: (query: string) => `${PROTECTED_SLAG_V8}/user/autocomplete/department/${query}`,
+  AUTOCOMPLETE_BY_DEPARTMENT: (query: string) => `${PROTECTED_SLAG_V8}/user/autocomplete/${query}`,
+  // AUTOCOMPLETE_BY_DEPARTMENT: (query: string) => `${PROTECTED_SLAG_V8}/user/autocomplete/department/${query}`,
 }
 
 @Injectable({
@@ -44,7 +45,8 @@ export class UserAutocompleteService {
     query: string,
     departments: any
   ): Observable<NsAutoComplete.IUserAutoComplete[]> {
-    let url = API_END_POINTS.AUTOCOMPLETE_BY_DEPARTMENT(query)
+    // let url = API_END_POINTS.AUTOCOMPLETE_BY_DEPARTMENT(query)
+    let url = API_END_POINTS.AUTOCOMPLETE(query)
 
     const stringifiedQueryParams = getStringifiedQueryParams({
       dealerCode: this.configSvc.userProfile && this.configSvc.userProfile.dealerCode ? this.configSvc.userProfile.dealerCode : undefined,
@@ -55,9 +57,11 @@ export class UserAutocompleteService {
 
     url += stringifiedQueryParams ? `?${stringifiedQueryParams}` : ''
 
-    return this.http.post<NsAutoComplete.IUserAutoComplete[]>(
-      url ,
-      { departments }
-    )
+    return this.http.get<NsAutoComplete.IUserAutoComplete[]>(url)
+    // return this.http.post<NsAutoComplete.IUserAutoComplete[]>(
+    //   url,
+    //   { departments }
+    // )
+
   }
 }

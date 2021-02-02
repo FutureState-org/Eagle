@@ -183,7 +183,7 @@
       <ng-container i18n>Access to this YouTube content is blocked.</ng-container>
     </p>
     <ws-widget-content-progress *ngIf="content?.identifier" [forPreview]="forPreview" [contentId]="content?.identifier"
-    [className]="'thick'" [progress]="content?.progress?.progress">
+      [className]="'thick'" [progress]="content?.progress?.progress">
     </ws-widget-content-progress>
   </div>
 </div>
@@ -217,8 +217,8 @@
   <ws-widget-btn-kb [forPreview]="forPreview" [contentId]="content?.identifier" [contentName]="content?.name"
     [contentType]="content?.contentType" [status]="content?.status">
   </ws-widget-btn-kb>
-  <ws-widget-btn-goals [forPreview]="forPreview" *ngIf="isGoalsEnabled && btnGoalsConfig" [widgetData]="btnGoalsConfig">
-  </ws-widget-btn-goals>
+  <!-- <ws-widget-btn-goals [forPreview]="forPreview" *ngIf="isGoalsEnabled && btnGoalsConfig" [widgetData]="btnGoalsConfig">
+  </ws-widget-btn-goals> -->
   <ws-widget-btn-playlist [forPreview]="forPreview" *ngIf="btnPlaylistConfig" [widgetData]="btnPlaylistConfig">
   </ws-widget-btn-playlist>
   <ws-widget-btn-content-feedback-v2 [forPreview]="forPreview"
