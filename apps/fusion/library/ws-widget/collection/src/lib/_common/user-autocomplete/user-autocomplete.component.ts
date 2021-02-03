@@ -55,8 +55,8 @@ export class UserAutocompleteComponent implements OnInit {
             }
             if (this.autocompleteByDepartment) {
               // if (this.configSvc.userProfile) {
-                // const deptName = this.configSvc.userProfile.departmentName || 'ias'
-                return this.userAutocompleteSvc.fetchAutoCompleteByDept(value, this.departments).pipe(catchError(_ => of([])))
+              // const deptName = this.configSvc.userProfile.departmentName || 'ias'
+              return this.userAutocompleteSvc.fetchAutoCompleteByDept(value).pipe(catchError(_ => of([])))
               // }
             }
           }

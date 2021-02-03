@@ -8,7 +8,6 @@ import { NsAutoComplete } from './user-autocomplete.model'
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {
   AUTOCOMPLETE: (query: string) => `${PROTECTED_SLAG_V8}/user/autocomplete/${query}`,
-  AUTOCOMPLETE_BY_DEPARTMENT: (query: string) => `${PROTECTED_SLAG_V8}/user/autocomplete/${query}`,
   // AUTOCOMPLETE_BY_DEPARTMENT: (query: string) => `${PROTECTED_SLAG_V8}/user/autocomplete/department/${query}`,
 }
 
@@ -42,10 +41,8 @@ export class UserAutocompleteService {
   }
 
   fetchAutoCompleteByDept(
-    query: string,
-    departments: any
+    query: string
   ): Observable<NsAutoComplete.IUserAutoComplete[]> {
-    // let url = API_END_POINTS.AUTOCOMPLETE_BY_DEPARTMENT(query)
     let url = API_END_POINTS.AUTOCOMPLETE(query)
 
     const stringifiedQueryParams = getStringifiedQueryParams({
@@ -56,9 +53,6 @@ export class UserAutocompleteService {
     })
 
     url += stringifiedQueryParams ? `?${stringifiedQueryParams}` : ''
-    const department = departments
-    // tslint:disable-next-line: no-console
-    console.log(department)
 
     return this.http.get<NsAutoComplete.IUserAutoComplete[]>(url)
     // return this.http.post<NsAutoComplete.IUserAutoComplete[]>(
