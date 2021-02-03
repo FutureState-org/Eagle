@@ -181,8 +181,8 @@ tocConfig?.overview?.softwareRequirements?.enabled && content?.softwareRequireme
                                 [href]="requirement.url">
                                 {{ requirement.title }}
                             </a>
-                            <a mat-stroked-button class="margin-right-s"
-                                *ngIf="!requirement?.url">{{ requirement.title }}
+                            <a mat-stroked-button class="margin-right-s" *ngIf="!requirement?.url">{{ requirement.title
+                                }}
                             </a>
                         </ng-container>
                     </div>
@@ -318,6 +318,19 @@ tocConfig?.overview?.softwareRequirements?.enabled && content?.softwareRequireme
                     </div>
                     <mat-divider class="divider-transparent"
                         *ngIf="tocConfig?.atAGlance?.duration?.enabled && content?.duration"></mat-divider>
+
+
+                    <!-- Publication Date -->
+                    <div class="info-item" *ngIf="publicationDate">
+                        <h3 class="item-heading ws-mat-primary-text">{{'Publication Date'}}
+                        </h3>
+                        <h3 class="item-value width-expand">
+                            {{ publicationDate | date: 'MMMM, yyyy' }}
+                        </h3>
+                    </div>
+                    <mat-divider class="divider-transparent" *ngIf="publicationDate"></mat-divider>
+
+
                     <div class="info-item" *ngIf="tocConfig?.atAGlance?.cost?.enabled">
                         <h3 class="item-heading ws-mat-primary-text">{{tocConfig?.atAGlance?.cost?.displayName}}</h3>
                         <h3 *ngIf="content?.exclusiveContent" class="item-value width-expand">Paid Content</h3>
@@ -483,7 +496,8 @@ tocConfig?.overview?.softwareRequirements?.enabled && content?.softwareRequireme
                             </h3>
                             <h3 class="item-value width-expand">
                                 <span class="cursor-pointer" (click)="goToContent(trans?.identifier)"
-                                    *ngFor="let trans of content?.hasTranslations || content?.isTranslationOf">{{ trans.locale | uppercase }}
+                                    *ngFor="let trans of content?.hasTranslations || content?.isTranslationOf">{{
+                                    trans.locale | uppercase }}
                                 </span>
                             </h3>
                         </div>

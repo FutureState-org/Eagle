@@ -50,40 +50,29 @@ import {
   PUBLICTYPE,
   GEOGRAPHY,
   INTENDEDFOREMAILNAME,
+  MY_FORMATS,
 } from './edit-meta.models'
 
-// import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter'
-// import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core'
-// import { MatDatepicker } from '@angular/material/datepicker'
-// import * as _moment from 'moment'
-// // tslint:disable-next-line:no-duplicate-imports
-// import { default as _rollupMoment, Moment } from 'moment'
-
-// const moment = _rollupMoment || _moment
-// export const MY_FORMATS = {
-//   parse: {
-//     dateInput: 'MM/YYYY',
-//   },
-//   display: {
-//     dateInput: 'MM/YYYY',
-//     monthYearLabel: 'MMM YYYY',
-//     dateA11yLabel: 'LL',
-//     monthYearA11yLabel: 'MMMM YYYY',
-//   },
-// }
+// Publication Date
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter'
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core'
+import { MatDatepicker } from '@angular/material/datepicker'
+import * as _moment from 'moment'
+// tslint:disable-next-line:no-duplicate-imports
+import { default as _rollupMoment, Moment } from 'moment'
+const moment = _rollupMoment || _moment
 
 @Component({
   selector: 'ws-auth-edit-meta',
   templateUrl: './edit-meta.component.html',
   styleUrls: ['./edit-meta.component.scss'],
   providers: [
-    // {
-    //   provide: DateAdapter,
-    //   useClass: MomentDateAdapter,
-    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
-    // },
-    // { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     // {provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false },}
   ],
 })
@@ -1312,9 +1301,6 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
       unit: [],
       verifiers: [],
       visibility: [],
-      yearOfPublication: [],
-      publicationDate: [],
-
     })
 
     this.contentForm.valueChanges.pipe(debounceTime(700)).subscribe(() => {
@@ -1426,24 +1412,17 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
     return newCatalog
   }
 
-  // chosenYearHandler(normalizedYear: Moment) {
-  //   const ctrlValue = this.contentForm.value.yearOfPublication
-  //   ctrlValue.year(normalizedYear.year())
-  //   this.contentForm.controls['yearOfPublication'].setValue(ctrlValue)
-  //   this.contentForm.controls['learningTrack'].setValue('this.contentForm.value.yearOfPublication._d.toISOString()')
-  //   // tslint:disable-next-line: no-console
-  //   console.log(typeof this.contentForm.value.yearOfPublication._d.toISOString())
-  // }
+  chosenYearHandler(normalizedYear: Moment) {
+    const ctrlValue = moment()
+    ctrlValue.year(normalizedYear.year())
+    this.contentForm.controls['learningTrack'].setValue(ctrlValue)
+  }
 
-  // chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-  //   const ctrlValue = this.contentForm.value.yearOfPublication
-  //   ctrlValue.month(normalizedMonth.month())
-  //   this.contentForm.controls['yearOfPublication'].setValue(ctrlValue)
-  //   this.contentForm.controls['learningTrack'].setValue('this.contentForm.value.yearOfPublication._d.toISOString()')
-  //   // tslint:disable-next-line: no-console
-  //   console.log(this.contentForm.value.learningTrack)
-  //   datepicker.close()
-
-  // }
+  chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.contentForm.value.learningTrack
+    ctrlValue.month(normalizedMonth.month())
+    this.contentForm.controls['learningTrack'].setValue(ctrlValue)
+    datepicker.close()
+  }
 
 }

@@ -28,7 +28,7 @@ export class CreateUserV2Component implements OnInit, OnDestroy {
       lname: new FormControl('', [Validators.required]),
       // mobile: new FormControl('', [Validators.required, Validators.minLength(10)]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      department: new FormControl('', [Validators.required]),
+      department: new FormControl('', []),
     })
   }
 

@@ -256,29 +256,27 @@
                 <!-- need to remove as per new design -->
 
 
-                <!-- <div class="margin-top-s" *ngIf="checkCondition('monthOfPublication', 'show')" -->
-                <!-- <div class="margin-top-s" [ngClass]="{ disable: checkCondition('yearOfPublication', 'disabled') }">
-                  <p class="margin-remove-bottom"
-                    [ngClass]="{ required: checkCondition('yearOfPublication', 'required') }">
+                <div class="margin-top-s">
+                  <p class="margin-remove-bottom" [ngClass]="{ required: checkCondition('learningTrack', 'required') }">
                     Month and Year of publication
                   </p>
                   <mat-form-field appearance="outline" class="margin-top-xs"
                     [ngClass]="{ 'mat-form-field-invalid': showError('monthOfPublication') }">
 
-                    <input matInput [matDatepicker]="dp" formControlName="yearOfPublication" #yearOfPublication
-                      i18n-placeholder placeholder="Enter Month and Year Of Publication here"
-                      [required]="checkCondition('yearOfPublication', 'required') ? true : null" />
+                    <input matInput [matDatepicker]="dp" formControlName="learningTrack" #learningTrack i18n-placeholder
+                      placeholder="Enter Month and Year Of Publication here"
+                      [required]="checkCondition('learningTrack', 'required') ? true : null" />
                     <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
                     <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)"
                       (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker">
                     </mat-datepicker>
 
-                    <mat-error *ngIf="showError('yearOfPublication')"
+                    <mat-error *ngIf="showError('learningTrack')"
                       i18n="Month and Year Of Publication Error|Explains Month and Year Of Publication is required">
                       Month and Year Of publication is mandatory
                     </mat-error>
                   </mat-form-field>
-                </div> -->
+                </div>
 
 
 

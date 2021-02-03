@@ -13,6 +13,9 @@ import { AppTocService } from '../../services/app-toc.service'
 import { BtnMailUserDialogComponent } from '@ws-widget/collection/src/lib/btn-mail-user/btn-mail-user-dialog/btn-mail-user-dialog.component'
 import { IBtnMailUser } from '@ws-widget/collection/src/lib/btn-mail-user/btn-mail-user.component'
 import { MatDialog } from '@angular/material'
+// Publication Date
+import { ApiService } from '../../../../../../../author/src/lib/modules/shared/services/api.service'
+import { CONTENT_READ_HIERARCHY_AND_DATA } from '../../../../../../../author/src/lib/constants/apiEndpoints'
 
 @Component({
   selector: 'ws-app-app-toc-single-page',
@@ -38,8 +41,10 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   @Input() forPreview = false
   tocConfig: any = null
   loggedInUserId!: any
+  publicationDate = null
 
   constructor(
+    private apiService: ApiService,
     private route: ActivatedRoute,
     private tocSharedSvc: AppTocService,
     public configSvc: ConfigurationsService,
@@ -56,16 +61,26 @@ export class AppTocSinglePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
     if (!this.forPreview) {
       this.forPreview = window.location.href.includes('/author/')
     }
+
     if (this.route && this.route.parent) {
       this.routeSubscription = this.route.parent.data.subscribe((data: Data) => {
         this.initData(data)
         this.tocConfig = data.pageData.data
+
+        // Publication Date
+        this.apiService.get<any[]>(
+          `${CONTENT_READ_HIERARCHY_AND_DATA}${data.content.data.identifier}`,
+        ).subscribe(d => {
+          this.publicationDate = d[0].content.learningTrack
+        })
+
       })
     }
-    if (this.configSvc && this.configSvc.userProfile &&  this.configSvc.userProfile.userId) {
+    if (this.configSvc && this.configSvc.userProfile && this.configSvc.userProfile.userId) {
       this.loggedInUserId = this.configSvc.userProfile.userId
     }
   }
