@@ -56,6 +56,9 @@ export class UserAutocompleteService {
     })
 
     url += stringifiedQueryParams ? `?${stringifiedQueryParams}` : ''
+    const department = departments
+    // tslint:disable-next-line: no-console
+    console.log(department)
 
     return this.http.get<NsAutoComplete.IUserAutoComplete[]>(url)
     // return this.http.post<NsAutoComplete.IUserAutoComplete[]>(
