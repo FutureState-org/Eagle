@@ -61,7 +61,8 @@
         </div>
       </div>
       <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-        [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress"></ws-widget-content-progress>
+        [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress">
+      </ws-widget-content-progress>
     </div>
   </div>
 </ng-template>
@@ -94,7 +95,8 @@
             [alt]="widgetData.content.name" [title]="widgetData.content.name" />
         </a>
         <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress"></ws-widget-content-progress>
+          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress">
+        </ws-widget-content-progress>
         <mat-card-content>
           <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
             [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" aria-label="Content"
@@ -106,7 +108,7 @@
               </ws-widget-display-content-type>
               <span *ngIf="widgetData.content.duration" class="text-gray-600" i18n-title title="Duration">
                 &nbsp;&nbsp;|&nbsp;&nbsp;{{
-                  widgetData.content.duration | pipeDurationTransform: 'hms'
+                widgetData.content.duration | pipeDurationTransform: 'hms'
                 }}
               </span>
             </div>
@@ -143,7 +145,7 @@
             </ws-widget-display-content-type>
             <span *ngIf="widgetData.content.duration" class="text-gray-600" i18n-title title="Duration">
               &nbsp;&nbsp;|&nbsp;&nbsp;{{
-                widgetData.content.duration | pipeDurationTransform: 'hms'
+              widgetData.content.duration | pipeDurationTransform: 'hms'
               }}
             </span>
           </div>
@@ -209,13 +211,15 @@
             <img mat-card-image style="position: absolute; z-index: 2;" [src]="widgetData.content.appIcon"
               [id]="'card_' + widgetData.content.identifier" class="card-img ws-mat-primary-lite-background"
               [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name" />
-            <div class="source-div">
-              <!-- [src]="sourseIcon(widgetData.content.sourceName)" -->
+
+            <div class="source-div-hide"> </div>
+            <!-- <div class="source-div"  style="visibility: hidden">
+               [src]="sourseIcon(widgetData.content.sourceName)"
               <img [src]="widgetData.content.creatorLogo" [id]="'source_' + widgetData.content.identifier"
                 class="source-icon" [wsUtilsDefaultThumbnail]="defaultSLogo"
-                [alt]="widgetData.content.sourceName || iGOT" />
-              <!-- [title]="widgetData.content.sourceName" -->
-            </div>
+                [alt]="widgetData.content.sourceName || ADLI" />
+                 [title]="widgetData.content.sourceName"
+            </div> -->
           </div>
         </a>
         <button *ngIf="showFlip" class="detail-button ws-mat-primary-lite-background-op30" mat-icon-button
@@ -223,7 +227,8 @@
           <mat-icon>flip_to_back</mat-icon>
         </button>
         <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress"></ws-widget-content-progress>
+          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress">
+        </ws-widget-content-progress>
 
         <mat-card-content>
           <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
@@ -324,7 +329,8 @@
           <mat-icon>flip_to_back</mat-icon>
         </button>
         <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress"></ws-widget-content-progress>
+          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress">
+        </ws-widget-content-progress>
         <mat-card-content>
           <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
             [queryParams]="(widgetData.content | pipeContentRoute).queryParams" role="link" aria-label="Content"
@@ -431,7 +437,8 @@
           class="card-img ws-mat-primary-lite-background" [wsUtilsDefaultThumbnail]="defaultThumbnail"
           [alt]="widgetData.content.name" [title]="widgetData.content.name" />
         <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress"></ws-widget-content-progress>
+          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress">
+        </ws-widget-content-progress>
       </a>
 
       <mat-card-content class="m-small">
@@ -441,7 +448,7 @@
           <div class="ws-mat-primary-background text-truncate px-4 py-2 -mx-4 text-white">
             <span *ngIf="widgetData.content?.complexityLevel">{{
               widgetData.content?.complexityLevel
-            }}</span>
+              }}</span>
 
             <span i18n *ngIf="widgetData.content?.subTitle">
               |
@@ -531,7 +538,8 @@
           [wsUtilsDefaultThumbnail]="defaultThumbnail" [alt]="widgetData.content.name"
           [title]="widgetData.content.name" />
         <ws-widget-content-progress class="progress-bar" *ngIf="widgetData.content?.identifier"
-          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress"></ws-widget-content-progress>
+          [contentId]="widgetData.content?.identifier" [progress]="widgetData.content?.progress">
+        </ws-widget-content-progress>
       </a>
       <mat-card-content>
         <a (click)="raiseTelemetry()" [routerLink]="(widgetData.content | pipeContentRoute).url"
