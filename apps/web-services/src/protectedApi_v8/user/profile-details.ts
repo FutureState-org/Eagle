@@ -51,7 +51,6 @@ profileDeatailsApi.post('/createUserRegistry', async (req, res) => {
           roles: ['content-creator'],
           users: [userId],
         }
-        
         // Adding roles
         await axios.post(API_END_POINTS.addUserRegistryRole, addBody, {
           ...axiosRequestConfigLong,
