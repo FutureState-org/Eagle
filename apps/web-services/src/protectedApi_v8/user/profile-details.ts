@@ -17,6 +17,7 @@ const API_END_POINTS = {
     userProfileStatus: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/userProfileStatus`,
     // tslint:disable-next-line: object-literal-sort-keys
     migrateRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/migrateRegistry`,
+    addUserRegistryRole: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/roles/updateRolesV2`,
 }
 
 export async function getUserProfileStatus(wid: string) {
@@ -44,6 +45,17 @@ profileDeatailsApi.post('/createUserRegistry', async (req, res) => {
         const response = await axios.post(API_END_POINTS.createUserRegistry, { ...req.body, userId }, {
             ...axiosRequestConfigLong,
         })
+
+        const addBody = {
+          operation: 'add',
+          roles: ['content-creator'],
+          users: [userId],
+        }
+        // Adding roles
+        await axios.post(API_END_POINTS.addUserRegistryRole, addBody, {
+          ...axiosRequestConfigLong,
+        })
+
         res.status(response.status).json(response.data)
     } catch (err) {
         logError('ERROR CREATING USER REGISTRY >', err)
