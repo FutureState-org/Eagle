@@ -47,12 +47,12 @@ export class FeaturesComponent implements OnInit, OnDestroy {
       const appsConfig = this.configurationSvc.appsConfig
       const availGroups: NsAppsConfig.IGroup[] = []
       appsConfig.groups.forEach(group => {
-        // if (group.hasRole.length === 0 || this.accessService.hasRole(group.hasRole)) {
-        //   availGroups.push(group)
-        // }
-        if (group.hasRole.length === 0 || this.accessService.hasRole(group.hasRole) || group.name.toLowerCase() === 'contribution') {
+        if (group.hasRole.length === 0 || this.accessService.hasRole(group.hasRole)) {
           availGroups.push(group)
         }
+        // if (group.hasRole.length === 0 || this.accessService.hasRole(group.hasRole) || group.name.toLowerCase() === 'contribution') {
+        //   availGroups.push(group)
+        // }
       })
 
       this.featuresConfig = availGroups.map(

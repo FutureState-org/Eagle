@@ -265,7 +265,7 @@ export class InitService {
       .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
       .toPromise()
     this.configSvc.userGroups = new Set(details.group)
-    details.roles.push('content-creator')
+    // details.roles.push('content-creator')
 
     this.configSvc.userRoles = new Set(details.roles)
     if (this.configSvc.userProfile && this.configSvc.userProfile.isManager) {
