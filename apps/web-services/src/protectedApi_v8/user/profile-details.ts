@@ -19,6 +19,7 @@ const API_END_POINTS = {
     // tslint:disable-next-line: object-literal-sort-keys
     migrateRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/migrateRegistry`,
     // addUserRegistryRole: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/roles/updateRolesV2`,
+    rolesV2: `${CONSTANTS.ROLES_API_BASE}/v2/roles`,
 }
 
 export async function getUserProfileStatus(wid: string) {
@@ -47,24 +48,29 @@ profileDeatailsApi.post('/createUserRegistry', async (req, res) => {
             ...axiosRequestConfigLong,
         })
 
-        const addBody = {
+        const addRoleData = {
           operation: 'add',
           roles: ['content-creator'],
           users: [userId],
         }
-        
-        // Adding roles
-        // await axios.post(API_END_POINTS.addUserRegistryRole, addBody, {
-        //   ...axiosRequestConfigLong,
-        // })
 
-        const actionByWid = extractUserIdFromRequest(req)
-        const rootOrg = req.header('rootOrg') || ''
-        logInfo('Updating the roles for wid:', userId)
-        await updateRolesV2Mock(actionByWid, addBody, rootOrg)
-        .catch((err) => {
-            logError('performNewUserSteps:: ERROR ON updateRolesV2Mock', err)
-        })
+        const body = {
+          ...addRoleData,
+          action_by: userId,
+        }
+        const rootOrg = req.header('rootOrg')
+
+        await axios.post(
+          API_END_POINTS.rolesV2,
+          body,
+          {
+            ...axiosRequestConfig,
+            headers: {
+              rootOrg,
+            },
+            params: req.query,
+          }
+        )
 
         res.status(response.status).json(response.data)
     } catch (err) {
