@@ -48,17 +48,18 @@ profileDeatailsApi.post('/createUserRegistry', async (req, res) => {
         })
 
         const addBody = {
-          operation: "add",
-          roles: ["content-creator"],
+          operation: 'add',
+          roles: ['content-creator'],
           users: [userId],
         }
+        
         // Adding roles
         // await axios.post(API_END_POINTS.addUserRegistryRole, addBody, {
         //   ...axiosRequestConfigLong,
         // })
 
         const actionByWid = extractUserIdFromRequest(req)
-        const rootOrg = req.header("rootOrg") || ''
+        const rootOrg = req.header('rootOrg') || ''
         logInfo('Updating the roles for wid:', userId)
         await updateRolesV2Mock(actionByWid, addBody, rootOrg)
         .catch((err) => {
