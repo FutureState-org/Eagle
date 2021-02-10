@@ -39,6 +39,8 @@ export class InterestComponent implements OnInit {
 
   filteredOptions$: Observable<string[]> = of([])
   appName!: string
+  kwlist: string[] = []
+  filteredKeyWord: string[] = []
 
   constructor(
     private events: EventService,
@@ -66,12 +68,21 @@ export class InterestComponent implements OnInit {
     this.fetchSuggestedInterests()
     this.interestControl.setValue('')
 
+    this.interestSvc.fetchAutocompleteInterestsV2('').subscribe(a => {
+      this.kwlist = a
+      this.filteredKeyWord = a
+    })
+
     this.filteredOptions$ = this.interestControl.valueChanges.pipe(
       startWith(this.interestControl.value),
       debounceTime(500),
       distinctUntilChanged(),
       switchMap(value => this.interestSvc.fetchAutocompleteInterestsV2(value)),
     )
+
+    this.interestControl.valueChanges.subscribe(d => {
+      this.filteredKeyWord = this.keyword_filter(d)
+    })
 
     // this.filteredOptions$ = this.interestControl.valueChanges.pipe()
 
@@ -106,6 +117,12 @@ export class InterestComponent implements OnInit {
    * Below function is added to fetch user interests from parent comp or in
    * some other case if it is req in this component itself in the future
    */
+
+  private keyword_filter(value: string): string[] {
+    const filterValue = value.toLowerCase()
+    return this.kwlist.filter(fruit => fruit.toLowerCase().includes(filterValue))
+  }
+
   fetchUserInterests() {
     this.isFetchingUserInterests = true
     this.interestSvc.fetchUserInterestsV2().subscribe(

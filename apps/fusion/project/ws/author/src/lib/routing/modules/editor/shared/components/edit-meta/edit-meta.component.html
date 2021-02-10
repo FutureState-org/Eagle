@@ -331,7 +331,7 @@
             <div class="flex flex-end margin-top-l margin-bottom-s margin-right-l">
               <button mat-raised-button type="button"
                 class="text-white ws-mat-primary-background text-white margin-right-m"
-                (click)="data.emit('save');formNext(1)">
+                (click)="data.emit('save');formNext(nextFormVal)">
                 <b class="text-white" i18n>Save and Proceed</b>
               </button>
               <!-- <button mat-raised-button type="button" class="text-white ws-mat-primary-background text-white"
@@ -726,8 +726,6 @@
                       </mat-option> -->
                       <mat-option *ngFor="let option of filteredKeyWord " [value]="option">{{ option }}
                       </mat-option>
-
-
                       <!-- <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">{{ option }}
                       </mat-option> -->
                     </mat-autocomplete>
@@ -1088,7 +1086,8 @@
                     [ngClass]="{ disable: checkCondition('creatorContacts', 'disabled') }">
                     <label>
                       <div class="margin-top-xs flex flex-middle">
-                        <span i18n>Curators / Contacts</span>
+                        <span i18n>Authors</span>
+                        <!-- <span i18n>Curators / Contacts</span> -->
                         <!-- <mat-icon class="ws-mat-primary-text margin-left-xs pointer" (click)="showInfo('coAuthors')">info
                                                 </mat-icon> -->
                       </div>
@@ -1129,7 +1128,8 @@
                     [ngClass]="{ disable: checkCondition('creatorDetails', 'disabled') }">
                     <label>
                       <div class="margin-top-xs flex flex-middle">
-                        <span i18n>Authors</span>
+                        <span i18n>Curators / Contacts</span>
+                        <!-- <span i18n>Authors</span> -->
                         <!-- <mat-icon class="ws-mat-primary-text margin-left-xs pointer" (click)="showInfo('authors')">info
                                                 </mat-icon> -->
                       </div>

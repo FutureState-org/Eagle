@@ -5,3 +5,27 @@
 .text-area-input {
   line-height: 1.5 !important;
 }
+
+.social-media-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.social-media-item-left {
+  padding: 0px;
+  flex: 25%;
+}
+
+.social-media-item-center {
+  padding: 1px;
+  flex: 25%;
+}
+
+.social-media-item-right {
+  padding: 5px;
+  flex: 25%;
+}
+.social-media-item-rest {
+  padding: 0px;
+  flex: 20%;
+}

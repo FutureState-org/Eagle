@@ -25,13 +25,20 @@
         #interestSearch />
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
-    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption
+
+    <!-- <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption
       (optionSelected)="optionSelected($event.option.value)">
       <mat-option *ngIf="interestSearch.value" [value]="interestSearch.value">{{
         interestSearch.value
         }}</mat-option>
       <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">{{ option }}</mat-option>
+    </mat-autocomplete> -->
+
+    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption
+      (optionSelected)="optionSelected($event.option.value)">
+      <mat-option *ngFor="let option of filteredKeyWord " [value]="option">{{ option }}</mat-option>
     </mat-autocomplete>
+
   </div>
 
   <div class="interest-holder">

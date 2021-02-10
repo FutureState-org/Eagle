@@ -128,8 +128,9 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   { color: '#185F49', isDefault: false }, { color: '#126489', isDefault: false }]
 
   workFlow = [{ isActive: true, isCompleted: false, name: 'Basic Details', step: 0 },
-  // { isActive: false, isCompleted: false, name: 'Classification', step: 1 },
-  { isActive: false, isCompleted: false, name: 'Intended for', step: 2 }]
+    // { isActive: false, isCompleted: false, name: 'Classification', step: 1 },
+    // { isActive: false, isCompleted: false, name: 'Intended for', step: 2 }
+  ]
 
   @ViewChild('creatorContactsView', { static: false }) creatorContactsView!: ElementRef
   @ViewChild('trackContactsView', { static: false }) trackContactsView!: ElementRef
@@ -151,6 +152,7 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   showEmailWithName = false
   kwlist: string[] = []
   filteredKeyWord: string[] = []
+  nextFormVal = 0
 
   constructor(
     private formBuilder: FormBuilder,
@@ -181,7 +183,13 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
 
     if ((this.configSvc.userRoles || new Set()).has('admin')) {
-      this.workFlow.splice(1, 0, { isActive: false, isCompleted: false, name: 'Classification', step: 1 })
+      // this.workFlow.splice(1, 0, { isActive: false, isCompleted: false, name: 'Classification', step: 1 })
+      this.workFlow.push(
+        { isActive: false, isCompleted: false, name: 'Classification', step: 1 },
+        { isActive: false, isCompleted: false, name: 'Intended for', step: 2 }
+      )
+
+      this.nextFormVal = 1
     }
 
     INTENDEDFOREMAILNAME.forEach(e => {

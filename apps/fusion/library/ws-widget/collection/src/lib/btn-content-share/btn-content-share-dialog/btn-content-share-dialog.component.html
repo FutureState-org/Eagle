@@ -35,9 +35,26 @@
 
   <h3 class="mat-h3 margin-remove py-2" i18n>Share on Social Media</h3>
 
-  <div class="flex flex-wrap items-center">
+  <!-- <div class="flex flex-wrap items-center">
     <ws-widget-btn-facebook-share [url]="detailUrl" class="pr-4 pb-3"></ws-widget-btn-facebook-share>
     <ws-widget-btn-twitter-share [url]="detailUrl" [message]="message" class="pr-4 pb-3"></ws-widget-btn-twitter-share>
     <ws-widget-btn-linkedin-share [url]="detailUrl" class="pr-4 pb-3"></ws-widget-btn-linkedin-share>
+  </div> -->
+
+  <div class="social-media-container">
+    <div class="social-media-item-left">
+      <ws-widget-btn-facebook-share [url]="detailUrl" class="pr-4 pb-3"></ws-widget-btn-facebook-share>
+    </div>
+    <div class="social-media-item-center">
+      <ws-widget-btn-twitter-share [url]="detailUrl" [message]="message" class="pr-4 pb-3">
+      </ws-widget-btn-twitter-share>
+    </div>
+    <div class="social-media-item-right">
+      <ws-widget-btn-linkedin-share [url]="detailUrl" class="pr-4 pb-3"></ws-widget-btn-linkedin-share>
+    </div>
+    <div class="social-media-item-rest">
+    </div>
   </div>
+
+
 </div>
