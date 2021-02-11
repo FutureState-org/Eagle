@@ -7,18 +7,17 @@ import { logError, logInfo } from '../../utils/logger'
 import { ERROR } from '../../utils/message'
 import { extractUserIdFromRequest } from '../../utils/requestExtract'
 
-
 const API_END_POINTS = {
     createUserRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/createUserRegistry`,
     getMasterLanguages: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getMasterLanguages`,
     getMasterNationalities: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getMasterNationalities`,
     getProfilePageMeta: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getProfilePageMeta`,
     getUserRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getUserRegistry`,
+    rolesV2: `${CONSTANTS.ROLES_API_BASE}/v2/roles`,
     setUserProfileStatus: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/setUserProfileStatus`,
     userProfileStatus: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/userProfileStatus`,
     // tslint:disable-next-line: object-literal-sort-keys
     migrateRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/migrateRegistry`,
-    updateRoles: `${CONSTANTS.ROLES_API_BASE}/v1/update/roles`,
 }
 
 export async function getUserProfileStatus(wid: string) {
@@ -53,16 +52,22 @@ profileDeatailsApi.post('/createUserRegistry', async (req, res) => {
         }
         const rootOrg = req.header('rootOrg')!
         logInfo('Updating the roles for wid:', userId)
-
-        await axios({
-          ...axiosRequestConfig,
-          data: addRoleData,
-          headers: {
-            rootOrg,
-          },
-          method: 'PATCH',
-          url: `${API_END_POINTS.updateRoles}`,
-        })
+        const actionBy = req.header('wid')
+        const body = {
+          ...addRoleData,
+          action_by: actionBy,
+        }
+        await axios.post(
+          API_END_POINTS.rolesV2,
+          body,
+          {
+            ...axiosRequestConfig,
+            headers: {
+              rootOrg,
+            },
+            params: req.query,
+          }
+        )
 
         res.status(response.status).json(response.data)
     } catch (err) {
