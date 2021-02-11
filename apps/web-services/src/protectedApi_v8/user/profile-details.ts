@@ -18,7 +18,7 @@ const API_END_POINTS = {
     userProfileStatus: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/userProfileStatus`,
     // tslint:disable-next-line: object-literal-sort-keys
     migrateRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/migrateRegistry`,
-    updateRoles: `${CONSTANTS.ROLES_API_BASE}/v1/update/roles`
+    updateRoles: `${CONSTANTS.ROLES_API_BASE}/v1/update/roles`,
 }
 
 export async function getUserProfileStatus(wid: string) {
@@ -47,11 +47,11 @@ profileDeatailsApi.post('/createUserRegistry', async (req, res) => {
             ...axiosRequestConfigLong,
         })
         const addRoleData = {
-          operation: "add",
-          roles: ["content-creator"],
+          operation: 'add',
+          roles: ['content-creator'],
           users: [userId],
         }
-        const rootOrg = req.header("rootOrg")!
+        const rootOrg = req.header('rootOrg')!
         logInfo('Updating the roles for wid:', userId)
 
         await axios({
