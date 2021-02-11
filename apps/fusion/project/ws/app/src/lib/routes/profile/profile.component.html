@@ -35,13 +35,13 @@
         <span *ngIf="showText || screenSizeIsLtMedium"
           class="padding-left-s">{{enabledTabs?.learning?.displayName}}</span>
       </a>
-      <a mat-list-item *ngIf="enabledTabs?.achievements?.enabled" routerLinkActive="mat-toolbar"
+      <!-- <a mat-list-item *ngIf="enabledTabs?.achievements?.enabled" routerLinkActive="mat-toolbar"
         (click)="tabUpdate(enabledTabs?.achievements?.displayName); screenSizeIsLtMedium ? sideNavBar.toggle() : null"
         routerLink="/app/profile/competency/badges">
         <mat-icon>emoji_events</mat-icon>
         <span *ngIf="showText || screenSizeIsLtMedium" class="padding-left-s">
-          {{enabledTabs?.achievements?.displayName}}</span>
-      </a>
+          {{enabledTabs?.achievements?.displayName}} </span>
+      </a> -->
       <a mat-list-item *ngIf="enabledTabs?.interests?.enabled" routerLinkActive="mat-toolbar"
         (click)="tabUpdate(enabledTabs?.interests?.displayName); screenSizeIsLtMedium ? sideNavBar.toggle() : null"
         routerLink="/app/profile/interest">
