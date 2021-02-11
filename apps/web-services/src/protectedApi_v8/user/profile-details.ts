@@ -18,7 +18,7 @@ const API_END_POINTS = {
     userProfileStatus: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/userProfileStatus`,
     // tslint:disable-next-line: object-literal-sort-keys
     migrateRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/migrateRegistry`,
-    // addUserRegistryRole: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/roles/updateRolesV2`,
+    updateRoles: `${CONSTANTS.ROLES_API_BASE}/v1/update/roles`
 }
 
 export async function getUserProfileStatus(wid: string) {
@@ -54,9 +54,14 @@ profileDeatailsApi.post('/createUserRegistry', async (req, res) => {
         const rootOrg = req.header("rootOrg")!
         logInfo('Updating the roles for wid:', userId)
 
-        await updateRolesV2Mock(userId, addRoleData, rootOrg)
-        .catch((err) => {
-            logError('performNewUserSteps:: ERROR ON updateRolesV2Mock', err)
+        await axios({
+          ...axiosRequestConfig,
+          data: addRoleData,
+          headers: {
+            rootOrg,
+          },
+          method: 'PATCH',
+          url: `${API_END_POINTS.updateRoles}`,
         })
 
         res.status(response.status).json(response.data)
