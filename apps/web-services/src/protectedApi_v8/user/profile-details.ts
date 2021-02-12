@@ -13,7 +13,7 @@ const API_END_POINTS = {
     getMasterNationalities: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getMasterNationalities`,
     getProfilePageMeta: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getProfilePageMeta`,
     getUserRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getUserRegistry`,
-    rolesV2: `${CONSTANTS.ROLES_API_BASE}/v2/roles`,
+    // rolesV2: `${CONSTANTS.ROLES_API_BASE}/v2/roles`,
     setUserProfileStatus: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/setUserProfileStatus`,
     userProfileStatus: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/userProfileStatus`,
     // tslint:disable-next-line: object-literal-sort-keys
@@ -45,29 +45,6 @@ profileDeatailsApi.post('/createUserRegistry', async (req, res) => {
         const response = await axios.post(API_END_POINTS.createUserRegistry, { ...req.body, userId }, {
             ...axiosRequestConfigLong,
         })
-        const addRoleData = {
-          operation: 'add',
-          roles: ['content-creator'],
-          users: [userId],
-        }
-        const rootOrg = req.header('rootOrg')!
-        logInfo('Updating the roles for wid:', userId)
-        const actionBy = req.header('wid')
-        const body = {
-          ...addRoleData,
-          action_by: actionBy,
-        }
-        await axios.post(
-          API_END_POINTS.rolesV2,
-          body,
-          {
-            ...axiosRequestConfig,
-            headers: {
-              rootOrg,
-            },
-            params: req.query,
-          }
-        )
 
         res.status(response.status).json(response.data)
     } catch (err) {
