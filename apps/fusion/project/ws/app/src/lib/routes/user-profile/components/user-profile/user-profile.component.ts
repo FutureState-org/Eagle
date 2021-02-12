@@ -26,6 +26,9 @@ import { NotificationComponent } from '@ws/author/src/lib/modules/shared/compone
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { LoaderService } from '@ws/author/src/public-api'
+import { SystemRolesManagementService } from '../../../../../../../admin/src/lib/modules/tenant-admin/routes/system-roles-management/system-roles-management.service'
+
+import { IManageUser } from '../../../../../../../admin/src/lib/modules/tenant-admin/routes/system-roles-management/system-roles-management.model'
 // import { InterestComponent } from '../../../profile/routes/interest/components/interest/interest.component'
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
@@ -115,6 +118,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     public dialog: MatDialog,
     private loader: LoaderService,
+    public rolesSvc: SystemRolesManagementService,
   ) {
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
     this.createUserForm = new FormGroup({
@@ -176,6 +180,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    // tslint:disable-next-line: no-console
+    console.log('JJJJJJJJJJJJJJJJJJJJJJJJJ')
     this.eOrganizationType = NsUserProfileDetails.EORGANIZATIONTYPE
     // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
     //   console.log('ngOnInit - value', value);
@@ -855,6 +862,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const profileRequest = this.constructReq(form)
     this.userProfileSvc.updateProfileDetails(profileRequest).subscribe(
       () => {
+
+        // Updating the "content-creator" Role
+        // this.addNewDefaultRole(userId)
+
         form.reset()
         this.uploadSaveData = false
         this.configSvc.profileDetailsStatus = true
@@ -865,6 +876,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.openSnackbar(this.toastError.nativeElement.value)
         this.uploadSaveData = false
       })
+  }
+
+  addNewDefaultRole(userId: string) {
+    const addBody: IManageUser = {
+      users: [userId],
+      operation: 'add',
+      roles: ['content-creator'],
+    }
+    this.rolesSvc.manageUser(addBody).then(() => { })
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
