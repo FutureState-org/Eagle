@@ -6,6 +6,7 @@ import { CONSTANTS } from '../../utils/env'
 import { logError, logInfo } from '../../utils/logger'
 import { ERROR } from '../../utils/message'
 import { extractUserIdFromRequest } from '../../utils/requestExtract'
+import { updateRolesV2Mock } from './roles'
 
 const API_END_POINTS = {
     createUserRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/createUserRegistry`,
@@ -43,7 +44,21 @@ profileDeatailsApi.post('/createUserRegistry', async (req, res) => {
       logInfo('Create user registry for', userId)
       const response = await axios.post(API_END_POINTS.createUserRegistry, { ...req.body, userId }, {
           ...axiosRequestConfigLong,
-      }) 
+      })
+
+      const addRoleData = {
+        operation: 'add',
+        roles: ['content-creator'],
+        users: [userId],
+      }
+      const rootOrg = req.header("rootOrg")!
+      logInfo('Updating the roles for wid:', userId)
+
+      await updateRolesV2Mock(userId, addRoleData, rootOrg)
+      .catch((err) => {
+          logError('performNewUserSteps:: ERROR ON updateRolesV2Mock', err)
+      })
+
       
       res.status(response.status).json(response.data)
   } catch (err) {
