@@ -13,7 +13,6 @@ const API_END_POINTS = {
     getMasterNationalities: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getMasterNationalities`,
     getProfilePageMeta: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getProfilePageMeta`,
     getUserRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getUserRegistry`,
-    // rolesV2: `${CONSTANTS.ROLES_API_BASE}/v2/roles`,
     setUserProfileStatus: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/setUserProfileStatus`,
     userProfileStatus: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/userProfileStatus`,
     // tslint:disable-next-line: object-literal-sort-keys
@@ -39,18 +38,18 @@ export async function getUserProfileStatus(wid: string) {
 export const profileDeatailsApi = Router()
 
 profileDeatailsApi.post('/createUserRegistry', async (req, res) => {
-    try {
-        const userId = extractUserIdFromRequest(req)
-        logInfo('Create user registry for', userId)
-        const response = await axios.post(API_END_POINTS.createUserRegistry, { ...req.body, userId }, {
-            ...axiosRequestConfigLong,
-        })
-
-        res.status(response.status).json(response.data)
-    } catch (err) {
-        logError('ERROR CREATING USER REGISTRY >', err)
-        res.status((err && err.response && err.response.status) || 500).send(err)
-    }
+  try {
+      const userId = extractUserIdFromRequest(req)
+      logInfo('Create user registry for', userId)
+      const response = await axios.post(API_END_POINTS.createUserRegistry, { ...req.body, userId }, {
+          ...axiosRequestConfigLong,
+      }) 
+      
+      res.status(response.status).json(response.data)
+  } catch (err) {
+      logError('ERROR CREATING USER REGISTRY >', err)
+      res.status((err && err.response && err.response.status) || 500).send(err)
+  }
 })
 
 // tslint:disable-next-line: no-identical-functions
