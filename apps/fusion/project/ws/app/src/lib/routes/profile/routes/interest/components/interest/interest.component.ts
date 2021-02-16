@@ -8,6 +8,9 @@ import { IResolveResponse } from 'library/ws-widget/utils/src/lib/resolvers/reso
 import { Observable, of } from 'rxjs'
 import { debounceTime, distinctUntilChanged, startWith, switchMap } from 'rxjs/operators'
 import { InterestService } from '../../services/interest.service'
+import {
+  DATATOPICS,
+} from '../../../../../../../../../author/src/lib/routing/modules/editor/shared/components/edit-meta/edit-meta.models'
 
 @Component({
   selector: 'ws-app-interest',
@@ -68,10 +71,13 @@ export class InterestComponent implements OnInit {
     this.fetchSuggestedInterests()
     this.interestControl.setValue('')
 
-    this.interestSvc.fetchAutocompleteInterestsV2('').subscribe(a => {
-      this.kwlist = a
-      this.filteredKeyWord = a
-    })
+    // this.interestSvc.fetchAutocompleteInterestsV2('').subscribe(a => {
+    //   this.kwlist = a
+    //   this.filteredKeyWord = a
+    // })
+
+    this.kwlist = DATATOPICS
+    this.filteredKeyWord = DATATOPICS
 
     this.filteredOptions$ = this.interestControl.valueChanges.pipe(
       startWith(this.interestControl.value),

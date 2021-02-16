@@ -198,10 +198,13 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     })
 
-    this.interestSvc.fetchAutocompleteInterestsV2('').subscribe(a => {
-      this.kwlist = a
-      this.filteredKeyWord = a
-    })
+    // this.interestSvc.fetchAutocompleteInterestsV2('').subscribe(a => {
+    //   this.kwlist = a
+    //   this.filteredKeyWord = a
+    // })
+
+    this.kwlist = DATATOPICS
+    this.filteredKeyWord = DATATOPICS
 
     this.typeCheck()
     this.ordinals = this.authInitService.ordinals
