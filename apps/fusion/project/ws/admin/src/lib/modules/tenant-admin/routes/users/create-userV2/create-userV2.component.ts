@@ -3,6 +3,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { MatSnackBar } from '@angular/material'
 import { TenantAdminService } from '../../../tenant-admin.service'
+import { UserAutocompleteService } from '../../../../../../../../../../library/ws-widget/collection/src/lib/_common/user-autocomplete/user-autocomplete.service'
+import { SystemRolesManagementService } from '../../system-roles-management/system-roles-management.service'
+import { IManageUser } from '../../system-roles-management/system-roles-management.model'
 
 @Component({
   selector: 'ws-admin-create-user',
@@ -22,6 +25,8 @@ export class CreateUserV2Component implements OnInit, OnDestroy {
   constructor(
     private snackBar: MatSnackBar,
     private tenantAdminSvc: TenantAdminService,
+    private userAutocompleteSvc: UserAutocompleteService,
+    public rolesSvc: SystemRolesManagementService,
   ) {
     this.createUserForm = new FormGroup({
       fname: new FormControl('', [Validators.required]),
@@ -39,6 +44,21 @@ export class CreateUserV2Component implements OnInit, OnDestroy {
     this.getUserDepartments()
   }
 
+  updateRole(email: string) {
+    this.userAutocompleteSvc.fetchAutoComplete(email).subscribe(d => {
+      if (d[0] && d[0].wid) {
+        const addBody: IManageUser = {
+          users: [d[0].wid],
+          operation: 'add',
+          roles: ['content-creator'],
+        }
+        this.rolesSvc.manageUser(addBody).then(() => {
+        }).catch(() => {
+        })
+      }
+    })
+  }
+
   ngOnDestroy() {
     if (this.unseenCtrlSub && !this.unseenCtrlSub.closed) {
       this.unseenCtrlSub.unsubscribe()
@@ -49,6 +69,11 @@ export class CreateUserV2Component implements OnInit, OnDestroy {
     this.uploadSaveData = true
     this.tenantAdminSvc.createUser(form.value).subscribe(
       () => {
+
+        if (form.value.email) {
+          this.updateRole(form.value.email)
+        }
+
         form.reset()
         this.uploadSaveData = false
         this.openSnackbar(this.toastSuccess.nativeElement.value)
