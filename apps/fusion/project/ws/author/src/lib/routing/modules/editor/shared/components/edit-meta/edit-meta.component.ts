@@ -383,6 +383,7 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
       this.filteredKeyWord = this.keyword_filter(d)
     })
 
+    this.fetchAuthorEmail()
   }
 
   private keyword_filter(value: string): string[] {
@@ -1158,7 +1159,8 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
               email: event.option.value.mail,
             })
             // For author email
-            this.fetchAuthorEmail()
+            this.authorEmailList[event.option.value.id] = event.option.value.mail
+
             this.contentForm.controls[field].setValue(this.contentForm.controls[field].value)
           } else {
             this.snackBar.openFromComponent(NotificationComponent, {
