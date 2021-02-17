@@ -153,6 +153,7 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   kwlist: string[] = []
   filteredKeyWord: string[] = []
   nextFormVal = 0
+  authorEmailList: any[] = []
 
   constructor(
     private formBuilder: FormBuilder,
@@ -389,6 +390,15 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.kwlist.filter(fruit => fruit.toLowerCase().includes(filterValue))
   }
 
+  fetchAuthorEmail() {
+    const emaarr = this.contentForm.controls.creatorContacts.value
+    emaarr.forEach((e: any) => {
+      this.editorService.fetchEmployeeList(e.name).subscribe(d => {
+        this.authorEmailList[e.id] = d[0].mail
+      })
+    })
+  }
+
   typeCheck() {
     if (this.type) {
       let dataName = ''
@@ -483,7 +493,6 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
   // }
 
   private set content(contentMeta: NSContent.IContentMeta) {
-
     this.contentMeta = contentMeta
     this.isEditEnabled = this.contentService.hasAccess(
       contentMeta,
@@ -1148,6 +1157,8 @@ export class EditMetaComponent implements OnInit, OnDestroy, AfterViewInit {
               name: event.option.value.displayName,
               email: event.option.value.mail,
             })
+            // For author email
+            this.fetchAuthorEmail()
             this.contentForm.controls[field].setValue(this.contentForm.controls[field].value)
           } else {
             this.snackBar.openFromComponent(NotificationComponent, {
