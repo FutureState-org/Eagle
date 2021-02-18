@@ -255,6 +255,7 @@ userRegistrationApi.post('/bulkUpload', async (req, res) => {
         const uuid = uuidv4()
         const reportData = [['email', 'status']]
         fs.writeFileSync(filePath + `${uuid}.${ext}`, base64data, 'base64')
+        
         const reqToInsert = {
             name: `${fileName}`,
             report: null,
@@ -342,6 +343,7 @@ userRegistrationApi.post('/bulkUpload', async (req, res) => {
                 }
             }
         }
+
         const reqToUpdate = {
             name: `${fileName}`,
             report: reportData,
