@@ -26,9 +26,6 @@ import { NotificationComponent } from '@ws/author/src/lib/modules/shared/compone
 import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
 import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
 import { LoaderService } from '@ws/author/src/public-api'
-import { SystemRolesManagementService } from '../../../../../../../admin/src/lib/modules/tenant-admin/routes/system-roles-management/system-roles-management.service'
-
-import { IManageUser } from '../../../../../../../admin/src/lib/modules/tenant-admin/routes/system-roles-management/system-roles-management.model'
 // import { InterestComponent } from '../../../profile/routes/interest/components/interest/interest.component'
 
 export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
@@ -103,6 +100,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isForcedUpdate = false
   showOrganizationTypeOther!: boolean
   eOrganizationType: any
+  userWId!: string
 
   // @ViewChild('userInterest', { static: false }) interestCompRef:
   //   | InterestComponent
@@ -118,12 +116,22 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     public dialog: MatDialog,
     private loader: LoaderService,
-    public rolesSvc: SystemRolesManagementService,
   ) {
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
+
+  }
+
+  ngOnInit() {
+
+    this.eOrganizationType = NsUserProfileDetails.EORGANIZATIONTYPE
+    // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
+    //   console.log('ngOnInit - value', value);
+    // })
+
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
-      middlename: new FormControl('', [Validators.pattern(this.namePatern)]),
+      // middlename: new FormControl('', [Validators.pattern(this.namePatern)]),
+      middlename: new FormControl('', []),
       surname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       photo: new FormControl('', []),
       countryCode: new FormControl('', [Validators.required]),
@@ -131,8 +139,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       telephone: new FormControl('', []),
       primaryEmail: new FormControl('', [Validators.required, Validators.email]),
       primaryEmailType: new FormControl(this.assignPrimaryEmailTypeCheckBox(this.ePrimaryEmailType.OFFICIAL), []),
+
       secondaryEmail: new FormControl('', []),
-      nationality: new FormControl('', [forbiddenNamesValidator(this.masterNationality)]),
+      // nationality: new FormControl('', [forbiddenNamesValidator(this.masterNationality)]),
+      nationality: new FormControl('', []),
       // dob: new FormControl('', []),
       // gender: new FormControl('', []),
       // maritalStatus: new FormControl('', []),
@@ -140,11 +150,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       knownLanguages: new FormControl([], []),
       residenceAddress: new FormControl('', []),
       // category: new FormControl('', []),
-      pincode: new FormControl('', [Validators.pattern(this.pincodePattern)]),
+      // pincode: new FormControl('', [Validators.pattern(this.pincodePattern)]),
+      pincode: new FormControl('', []),
       schoolName10: new FormControl('', []),
-      yop10: new FormControl('', [Validators.pattern(this.yearPattern)]),
+      // yop10: new FormControl('', [Validators.pattern(this.yearPattern)]),
+      yop10: new FormControl('', []),
       schoolName12: new FormControl('', []),
-      yop12: new FormControl('', [Validators.pattern(this.yearPattern)]),
+      // yop12: new FormControl('', [Validators.pattern(this.yearPattern)]),
+      yop12: new FormControl('', []),
       degrees: this.fb.array([this.createDegree()]),
       postDegrees: this.fb.array([this.createDegree()]),
       certificationDesc: new FormControl('', []),
@@ -165,7 +178,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       payType: new FormControl('', []),
       service: new FormControl('', []),
       cadre: new FormControl('', []),
-      allotmentYear: new FormControl('', [Validators.pattern(this.yearPattern)]),
+      // allotmentYear: new FormControl('', [Validators.pattern(this.yearPattern)]),
+      allotmentYear: new FormControl('', []),
       otherDetailsDoj: new FormControl('', []),
       civilListNo: new FormControl('', []),
       employeeCode: new FormControl('', []),
@@ -177,19 +191,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       organizationTypeOther: new FormControl('', []),
       country: new FormControl('', []),
     })
-  }
 
-  ngOnInit() {
-
-    // tslint:disable-next-line: no-console
-    console.log('JJJJJJJJJJJJJJJJJJJJJJJJJ')
-    this.eOrganizationType = NsUserProfileDetails.EORGANIZATIONTYPE
-    // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
-    //   console.log('ngOnInit - value', value);
-    // })
     this.getUserDetails()
     this.fetchMeta()
     this.assignPrimaryEmailType(this.isOfficialEmail)
+
   }
   fetchMeta() {
     this.userProfileSvc.getMasterNationlity().subscribe(
@@ -229,7 +235,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     return this.fb.group({
       degree: new FormControl('', []),
       instituteName: new FormControl('', []),
-      yop: new FormControl('', [Validators.pattern(this.yearPattern)]),
+      // yop: new FormControl('', [Validators.pattern(this.yearPattern)]),
+      yop: new FormControl('', []),
     })
   }
 
@@ -237,7 +244,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     return this.fb.group({
       degree: new FormControl(degree.degree, []),
       instituteName: new FormControl(degree.instituteName, []),
-      yop: new FormControl(degree.yop, [Validators.pattern(this.yearPattern)]),
+      // yop: new FormControl(degree.yop, [Validators.pattern(this.yearPattern)]),
+      yop: new FormControl(degree.yop, []),
     })
   }
 
@@ -638,6 +646,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       primaryEmail: data.personalDetails.primaryEmail,
       secondaryEmail: data.personalDetails.personalEmail,
       primaryEmailType: this.filterPrimaryEmailType(data),
+      organizationName: data.personalDetails.organizationName,
+      organizationType: data.personalDetails.organizationType,
+      organizationTypeOther: data.personalDetails.organizationTypeOther,
+      country: data.personalDetails.country,
       residenceAddress: data.personalDetails.postalAddress,
       pincode: data.personalDetails.pincode,
       schoolName10: academics.X_STANDARD.schoolName10,
@@ -665,8 +677,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       otherDetailsOfficePinCode: data.employmentDetails.pinCode,
       skillAquiredDesc: data.skills.additionalSkills,
       certificationDesc: data.skills.certificateDetails,
-    },
-      { emitEvent: true })
+    }, { emitEvent: true })
     this.cd.detectChanges()
     this.cd.markForCheck()
     this.setDropDownOther(organisation)
@@ -724,6 +735,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         personalEmail: '',
         postalAddress: form.value.residenceAddress,
         pincode: form.value.pincode,
+        organizationName: form.value.organizationName,
+        organizationType: form.value.organizationType,
+        organizationTypeOther: form.value.organizationTypeOther,
+        country: form.value.country,
       },
       academics: this.getAcademics(form),
       employmentDetails: {
@@ -863,9 +878,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.userProfileSvc.updateProfileDetails(profileRequest).subscribe(
       () => {
 
-        // Updating the "content-creator" Role
-        // this.addNewDefaultRole(userId)
-
         form.reset()
         this.uploadSaveData = false
         this.configSvc.profileDetailsStatus = true
@@ -876,15 +888,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.openSnackbar(this.toastError.nativeElement.value)
         this.uploadSaveData = false
       })
-  }
-
-  addNewDefaultRole(userId: string) {
-    const addBody: IManageUser = {
-      users: [userId],
-      operation: 'add',
-      roles: ['content-creator'],
-    }
-    this.rolesSvc.manageUser(addBody).then(() => { })
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

@@ -258,7 +258,7 @@ userRegistrationApi.post('/bulkUpload', async (req, res) => {
         const reqToInsert = {
             name: `${fileName}`,
             report: null,
-            status: 'processing',
+            status: 'Processing',
             user_id: extractUserIdFromRequest(req),
             uuid,
         }
@@ -345,7 +345,7 @@ userRegistrationApi.post('/bulkUpload', async (req, res) => {
         const reqToUpdate = {
             name: `${fileName}`,
             report: reportData,
-            status: 'completed',
+            status: 'Completed',
             user_id: extractUserIdFromRequest(req),
             uuid,
         }

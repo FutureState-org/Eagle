@@ -124,7 +124,7 @@
                       </div>
 
                       <div class="input-wrapper margin-top-s">
-                        <p class=" margin-remove-bottom form-label required"
+                        <p class=" margin-remove-bottom form-label"
                           i18n="Country label|Label which explains the user to enter Country">
                           Country
                         </p>
@@ -1048,11 +1048,12 @@
           <mat-spinner [diameter]="30"></mat-spinner>
         </div>
         <button mat-raised-button type="submit" (click)="onSubmit(createUserForm)"
-          class="text-white btn-success btn-responsive" [disabled]="uploadSaveData || createUserForm?.invalid">
+          class="text-white btn-success btn-responsive" [disabled]="createUserForm?.invalid || uploadSaveData">
           <span class="text-white" i18n>
             Save Details
           </span>
         </button>
+
         <!-- <button mat-raised-button type="button" class="text-white ws-mat-primary-background text-white"
           (click)="formNext()">
           <span class="text-white" i18n>Next</span>

@@ -16,7 +16,7 @@ export class UserBulkUploadComponent implements OnInit, AfterViewInit {
   public displayLoader!: Observable<boolean>
   public formGroup = this.fb.group({
     file: ['', Validators.required],
-    department: new FormControl('', [Validators.required]),
+    department: new FormControl('', []),
   })
   fetching = false
   showFileError = false
@@ -58,7 +58,7 @@ export class UserBulkUploadComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-      this.dataSource.paginator = this.paginator
+    this.dataSource.paginator = this.paginator
   }
   getBulkUploadData() {
     this.fetching = true
@@ -130,7 +130,7 @@ export class UserBulkUploadComponent implements OnInit, AfterViewInit {
       this.departments = res
     })
       .catch(() => {
-       })
+      })
       .finally(() => {
       })
   }
