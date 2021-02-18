@@ -118,16 +118,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private loader: LoaderService,
   ) {
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
-
-  }
-
-  ngOnInit() {
-
-    this.eOrganizationType = NsUserProfileDetails.EORGANIZATIONTYPE
-    // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
-    //   console.log('ngOnInit - value', value);
-    // })
-
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       // middlename: new FormControl('', [Validators.pattern(this.namePatern)]),
@@ -191,6 +181,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       organizationTypeOther: new FormControl('', []),
       country: new FormControl('', []),
     })
+  }
+
+  ngOnInit() {
+
+    this.eOrganizationType = NsUserProfileDetails.EORGANIZATIONTYPE
+    // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
+    //   console.log('ngOnInit - value', value);
+    // })
 
     this.getUserDetails()
     this.fetchMeta()
