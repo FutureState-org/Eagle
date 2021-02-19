@@ -52,7 +52,7 @@ export function forbiddenNamesValidator(optionsArray: any): ValidatorFn {
   ],
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
-  createUserForm: FormGroup
+  createUserForm!: FormGroup
   unseenCtrl!: FormControl
   unseenCtrlSub!: Subscription
   uploadSaveData = false
@@ -118,9 +118,18 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private loader: LoaderService,
   ) {
     this.isForcedUpdate = !!this.route.snapshot.paramMap.get('isForcedUpdate')
+
+  }
+
+  ngOnInit() {
+
+    this.eOrganizationType = NsUserProfileDetails.EORGANIZATIONTYPE
+    // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
+    //   console.log('ngOnInit - value', value);
+    // })
+
     this.createUserForm = new FormGroup({
       firstname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
-      // middlename: new FormControl('', [Validators.pattern(this.namePatern)]),
       middlename: new FormControl('', []),
       surname: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
       photo: new FormControl('', []),
@@ -129,10 +138,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       telephone: new FormControl('', []),
       primaryEmail: new FormControl('', [Validators.required, Validators.email]),
       primaryEmailType: new FormControl(this.assignPrimaryEmailTypeCheckBox(this.ePrimaryEmailType.OFFICIAL), []),
-
       secondaryEmail: new FormControl('', []),
       // nationality: new FormControl('', [forbiddenNamesValidator(this.masterNationality)]),
-      nationality: new FormControl('', []),
       // dob: new FormControl('', []),
       // gender: new FormControl('', []),
       // maritalStatus: new FormControl('', []),
@@ -140,11 +147,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       knownLanguages: new FormControl([], []),
       residenceAddress: new FormControl('', []),
       // category: new FormControl('', []),
-      // pincode: new FormControl('', [Validators.pattern(this.pincodePattern)]),
       pincode: new FormControl('', []),
+      // pincode: new FormControl('', [Validators.pattern(this.pincodePattern)]),
       schoolName10: new FormControl('', []),
-      // yop10: new FormControl('', [Validators.pattern(this.yearPattern)]),
       yop10: new FormControl('', []),
+      // yop10: new FormControl('', [Validators.pattern(this.yearPattern)]),
       schoolName12: new FormControl('', []),
       // yop12: new FormControl('', [Validators.pattern(this.yearPattern)]),
       yop12: new FormControl('', []),
@@ -181,14 +188,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       organizationTypeOther: new FormControl('', []),
       country: new FormControl('', []),
     })
-  }
-
-  ngOnInit() {
-
-    this.eOrganizationType = NsUserProfileDetails.EORGANIZATIONTYPE
-    // this.unseenCtrlSub = this.createUserForm.valueChanges.subscribe(value => {
-    //   console.log('ngOnInit - value', value);
-    // })
 
     this.getUserDetails()
     this.fetchMeta()
@@ -206,7 +205,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.createUserForm.patchValue({
           countryCode: this.countryCodes[0],
         })
-        this.onChangesNationality()
+        // this.onChangesNationality()
       },
       (_err: any) => {
       })
@@ -214,8 +213,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.userProfileSvc.getMasterLanguages().subscribe(
       data => {
         this.masterLanguagesEntries = data.languages
-        this.onChangesLanuage()
-        this.onChangesKnownLanuage()
+        // this.onChangesLanuage()
+        // this.onChangesKnownLanuage()
       },
       (_err: any) => {
       })
@@ -476,8 +475,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           data => {
             if (data && data.length) {
               const academics = this.populateAcademics(data[0])
-              this.setDegreeValuesArray(academics)
-              this.setPostDegreeValuesArray(academics)
+              // this.setDegreeValuesArray(academics)
+              // this.setPostDegreeValuesArray(academics)
               const organisations = this.populateOrganisationDetails(data[0])
               this.constructFormFromRegistry(data[0], academics, organisations)
               this.populateChips(data[0])
@@ -632,7 +631,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       surname: data.personalDetails.surname,
       photo: data.photo,
       // dob: this.getDateFromText(data.personalDetails.dob),
-      nationality: data.personalDetails.nationality,
+      // nationality: data.personalDetails.nationality,
       domicileMedium: data.personalDetails.domicileMedium,
       // gender: data.personalDetails.gender,
       // maritalStatus: data.personalDetails.maritalStatus,
@@ -678,15 +677,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }, { emitEvent: true })
     this.cd.detectChanges()
     this.cd.markForCheck()
-    this.setDropDownOther(organisation)
+    this.setDropDownOther(organisation, data.personalDetails.organizationType)
     this.setProfilePhotoValue(data)
+
   }
 
   setProfilePhotoValue(data: any) {
     this.photoUrl = data.photo || undefined
   }
 
-  setDropDownOther(organisation?: any) {
+  setDropDownOther(organisation?: any, orgtype?: any) {
     if (organisation.designation === 'Other') {
       this.showDesignationOther = true
     }
@@ -696,6 +696,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     if (organisation.industry === 'Other') {
       this.showIndustryOther = true
+    }
+
+    if (orgtype === 'Other') {
+      this.showOrganizationTypeOther = true
     }
   }
 
@@ -719,7 +723,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         middlename: form.value.middlename,
         surname: form.value.surname,
         // dob: form.value.dob,
-        nationality: form.value.nationality,
+        // nationality: form.value.nationality,
         domicileMedium: form.value.domicileMedium,
         // gender: form.value.gender,
         // maritalStatus: form.value.maritalStatus,
