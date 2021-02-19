@@ -703,17 +703,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  private setDegreeValuesArray(academics: any) {
-    this.degrees = this.createUserForm.get('degrees') as FormArray
-    this.degrees.removeAt(0)
-    academics.degree.map((degree: any) => { this.addDegreeValues(degree as FormArray) })
-  }
+  // private setDegreeValuesArray(academics: any) {
+  //   this.degrees = this.createUserForm.get('degrees') as FormArray
+  //   this.degrees.removeAt(0)
+  //   academics.degree.map((degree: any) => { this.addDegreeValues(degree as FormArray) })
+  // }
 
-  private setPostDegreeValuesArray(academics: any) {
-    this.postDegrees = this.createUserForm.get('postDegrees') as FormArray
-    this.postDegrees.removeAt(0)
-    academics.postDegree.map((degree: any) => { this.addPostDegreeValues(degree as FormArray) })
-  }
+  // private setPostDegreeValuesArray(academics: any) {
+  //   this.postDegrees = this.createUserForm.get('postDegrees') as FormArray
+  //   this.postDegrees.removeAt(0)
+  //   academics.postDegree.map((degree: any) => { this.addPostDegreeValues(degree as FormArray) })
+  // }
 
   private constructReq(form: any) {
     const profileReq = {
