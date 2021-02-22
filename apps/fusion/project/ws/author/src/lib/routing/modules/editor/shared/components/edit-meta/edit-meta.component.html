@@ -425,7 +425,7 @@
                   [ngClass]="{ disable: checkCondition('resourceType', 'disabled') }">
                   <label [ngClass]="{ required: checkCondition('resourceType', 'required') }">
                     <b *ngIf="isSiemens" i18n>Format</b>
-                    <span *ngIf="!isSiemens" i18n>Category Type</span>
+                    <span *ngIf="!isSiemens" i18n>Resource Type</span>
                   </label>
                   <div class="">
                     <mat-form-field appearance="outline" class="margin-top-s"
@@ -437,7 +437,7 @@
                         <mat-option *ngFor="let resource of ordinals.categoryType" [value]="resource">
                           {{ resource }}</mat-option>
                       </mat-select>
-                      <mat-error *ngIf="showError('resourceType')" i18n>Category Type is mandatory
+                      <mat-error *ngIf="showError('resourceType')" i18n>Resource type is mandatory
                       </mat-error>
                     </mat-form-field>
                   </div>
