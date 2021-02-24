@@ -13,7 +13,9 @@
   }
 
   .about-me {
-    width: 45%;
+
+    width: 90%;
+    // width: 45%;
     min-width: 220px;
     margin-right: 24px;
     padding-bottom: 16px;
@@ -205,6 +207,11 @@
 
 .star {
   font-size: 20px;
+}
+
+
+.mat-standard-chip {
+    min-height: 40px !important;
 }
 
 // .left-second {
