@@ -26,6 +26,7 @@ export class UrlUploadComponent implements OnInit {
   @Input() isCollectionEditor = false
   @Input() isSubmitPressed = false
   @Output() data = new EventEmitter<string>()
+  displayIPR = true
 
   constructor(
     private formBuilder: FormBuilder,
@@ -86,9 +87,12 @@ export class UrlUploadComponent implements OnInit {
     this.urlUploadForm.controls.isInIntranet.setValue(meta.isInIntranet || false)
     this.urlUploadForm.controls.isExternal.setValue(true)
     this.canUpdate = true
+
     if (meta.artifactUrl) {
       this.iprAccepted = true
+      this.displayIPR = false
     }
+
     if (meta.artifactUrl) {
       this.check()
     } else {

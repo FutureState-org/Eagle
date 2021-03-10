@@ -52,7 +52,7 @@
               </mat-select>
             </mat-form-field>
           </div> -->
-          <div class="flex flx-1 flex-middle margin-top-xs padding-top-l">
+          <div class="flex flx-1 flex-middle margin-top-xs padding-top-l" *ngIf="displayIPR">
             <mat-checkbox [checked]="iprAccepted" (change)="iprChecked()"></mat-checkbox>
             <p class="margin-left-xs margin-remove-bottom">
               I have read and agree to the

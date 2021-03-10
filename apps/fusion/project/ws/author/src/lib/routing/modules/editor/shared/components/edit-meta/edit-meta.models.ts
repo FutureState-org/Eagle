@@ -9,14 +9,22 @@ export const SECTOR = [
   'Climate',
 ]
 
+// export const DATATOPICS = [
+//   'Data Laws, Regulation, and Policies: Pertaining to resources providing details on laws, regulations, and ' +
+//   'policies on data privacy, data protection, data usage.',
+//   'Data Ethics: Pertaining to resources discussing data rights and the use of data to empower citizens and key stakeholders.',
+//   'Data Collection: Pertaining to resources providing details on the different channels data is collected',
+//   'Data Sharing: Pertaining to resources providing details describing contracts' +
+//   ' and policies that enable data to be shared between stakeholders.',
+//   'Data Analytics: Pertaining to resources providing details describing data analysis best practices and results.',
+// ]
+
 export const DATATOPICS = [
-  'Data Laws, Regulation, and Policies: Pertaining to resources providing details on laws, regulations, and ' +
-  'policies on data privacy, data protection, data usage.',
-  'Data Ethics: Pertaining to resources discussing data rights and the use of data to empower citizens and key stakeholders.',
-  'Data Collection: Pertaining to resources providing details on the different channels data is collected',
-  'Data Sharing: Pertaining to resources providing details describing contracts' +
-  ' and policies that enable data to be shared between stakeholders.',
-  'Data Analytics: Pertaining to resources providing details describing data analysis best practices and results.',
+  'Data Laws',
+  'Data Ethics',
+  'Data Collection',
+  'Data Sharing',
+  'Data Analytics',
 ]
 
 export const PUBLICTYPE = [
