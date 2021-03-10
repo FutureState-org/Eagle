@@ -8,7 +8,7 @@
 </mat-toolbar>
 
 <section class="about-content leading-relaxed" *ngIf="aboutPage">
-  <div class="about-info ws-primary-tinted-50" *ngIf="aboutPage?.banner" [style.backgroundImage]="headerBanner">
+  <!-- <div class="about-info ws-primary-tinted-50" *ngIf="aboutPage?.banner" [style.backgroundImage]="headerBanner">
     <div class="about-info-bg header-synopsis">
       <div class="header-title">
         <h1 class="mat-display-2 margin-bottom-l">
@@ -31,7 +31,8 @@
         </a>
       </div>
     </div>
-  </div>
+  </div> -->
+
 
   <section class="overview-container text-justify" *ngIf="aboutPage?.innerHtmlWithTitle">
     <h1 class="mat-heading">
@@ -39,52 +40,49 @@
     </h1>
     <div [innerHTML]="aboutPage?.innerHtmlWithTitle?.para | pipeSafeSanitizer: 'html'"></div>
   </section>
-  <section class="container-margin text-justify" *ngIf="aboutPage?.section1">
+  <section class="container-margin text-justify">
     <h1 class="mat-heading">
-      {{ aboutPage?.section1?.title }}
+      <!-- {{ aboutPage?.section1?.title }}  -->
+      {{'About Us'}}
     </h1>
     <div class="flex flex-between flex-wrap pb-4">
       <div class="learning-overview">
-        <p *ngFor="let content of aboutPage?.section1?.leftParas">
-          {{ content }}
+        <p>
+          The UN Economic Commission for Africa, Smart Africa, and Future State have launched Africa Data Leadership
+          Initiative
+          (ADLI). ADLI is a peer network of government, civil society, and private sector stakeholders across
+          Africa. ADLI provides a trusted forum in which peers can develop tailored, strategic approaches to ensure data
+          is used
+          safely, securely, and in service of African aspirations for the new data economy. Through peer-driven
+          exchanges on
+          salient topics, ADLI is building a cadre of data policy expert-practitioners across the continent
         </p>
       </div>
-      <div class="learning-overview" *ngIf="aboutPage?.section1?.rightParas?.length>0">
+      <!-- <div class="learning-overview" *ngIf="aboutPage?.section1?.rightParas?.length>0">
         <p *ngFor="let content of aboutPage?.section1?.rightParas">
           {{ content }}
         </p>
-      </div>
+      </div> -->
     </div>
-    <div class="text-center ws-mat-primary-background mat-toolbar mat-primary p-4" *ngIf="aboutPage?.section2">
+    <!-- <div class="text-center ws-mat-primary-background mat-toolbar mat-primary p-4" *ngIf="aboutPage?.section2">
       <h1 class="mat-heading ws-mat-primary-default-text">
         {{ aboutPage?.section2?.description }}
       </h1>
-    </div>
+    </div> -->
     <mat-divider></mat-divider>
-    <div class="pt-4" *ngIf="aboutPage?.section3">
+    <!-- <div class="pt-4" *ngIf="aboutPage?.section3">
       <h1 class="mat-heading">
         {{ aboutPage?.section3?.title }}
       </h1>
-
-      <!-- <div class="overview-intro ws-mat-primary-lite-background">
-          <iframe
-            [src]="videoLink"
-            i18n-title
-            title="about-video"
-            allow="fullscreen"
-            class="about-video"
-            width="100%"
-          ></iframe>
-        </div> -->
 
       <div class="learning-world" *ngIf="aboutPage?.section3">
         <p *ngFor="let content of aboutPage?.section3?.rightParas">
           {{ content }}
         </p>
       </div>
-    </div>
+    </div> -->
 
-    <section class="m-4" *ngIf="aboutPage?.features">
+    <!-- <section class="m-4" *ngIf="aboutPage?.features">
       <h1 class="mat-heading">
         {{ aboutPage?.features?.title }}
       </h1>
@@ -99,7 +97,7 @@
           <div [innerHTML]="(aboutPage?.features?.list)[key] | pipeSafeSanitizer: 'html'"></div>
         </mat-expansion-panel>
       </mat-accordion>
-    </section>
+    </section> -->
     <mat-divider></mat-divider>
   </section>
   <!-- <section class="container-margin" *ngIf="aboutPage?.section4">
